@@ -1,518 +1,389 @@
-#include "DxLib.h"
-#include <math.h>
-#include "main.h"
-#include "keyCheck.h"
-#include "player.h"
-#include "shot.h"
-#include "enemy.h"
-#include "bullet.h"
-#include "stage.h"
-#include "blast.h"
+#include<DxLib.h>
+#include<cmath>
+#include"main.h"
+//#include"Enemy.h"
 
-#include "testPlayer.h"
+///“–‚½‚è”»’èŠÖ”
+///@param posA A‚ÌÀ•W
+///@param radiusA A‚Ì”¼Œa
+///@param posB B‚ÌÀ•W
+///@param radiusB B‚Ì”¼Œa
+bool IsHit(const Position2& posA, float radiusA, const Position2& posB, float radiusB) {
+	//“–‚½‚è”»’è‚ğÀ‘•‚µ‚Ä‚­‚¾‚³‚¢
 
-
-typedef enum {
-	GMODE_INIT,
-	TEST_GMODE_INIT,
-	GMODE_TITLE,
-	GMODE_GAME,
-	TEST_GMODE_GAME,
-	GMODE_OVER,
-	GMODE_MAX
-}GAME_MODE;
-GAME_MODE gameMode;
-
-
-
-typedef struct {
-	int data1;
-	int hiscore;
-}FILE_DATA;
-
-// ----- •Ï”’è‹`
-int gameCounter;
-
-// ÃŞ°À“Ç‚İ‚İ
-char fileName[] = "data.dat";
-FILE_DATA fileData;
-
-// À²ÄÙ‰æ‘œ
-int titleImage;
-int titleBg;
-
-// ¹Ş°Ñµ°ÊŞ°‰æ‘œ
-int gOverImage;
-
-// Ìª°ÄŞ
-int fadeCnt;
-bool fadeIn;
-bool fadeOut;
-
-// ˆê’â~‚ÌÌ×¸Ş(true:’â~)
-bool pauseFlag;
-// •¶š“_–Å¶³İÄ
-int hitKeyCnt;
-
-// BGM
-int mainBgm;
-int endBgm;
-
-// ½º±
-int score;
-int hiScore;
-int numImage[11];
-int charImage[27];
-
-char Key[256];
-
-// ----- ÌßÛÄÀ²ÌßéŒ¾
-bool SystemInit(void);
-void GameInit(void);
-void testGameInit(void);
-void GameMain(void);
-void testGameMain(void);
-void GameDraw(void);
-void testGameDraw(void);
-void GameTitle(void);
-void GameOver(void);
-void HitCheck(void);
-bool FadeInScreen(int fadeStep);
-bool FadeOutScreen(int fadeStep);
-void DrawStatus(const char* title, int value, int top);
-void DrawStatusMain(const char* title, int value, int top);
-bool SaveData(void);
-bool LoadData(void);
-
-
-// ========== WinMainŠÖ”
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	// ¼½ÃÑ‚Ì‰Šú‰»
-	if (SystemInit() == false){
-		DxLib_End();
-		return 0;
-	}
-//	StopSoundMem(mainBgm);
-	gameMode = GMODE_INIT;
-	// ---------- ¹Ş°ÑÙ°Ìß
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
-	{
-		ClsDrawScreen();	// ‰æ–ÊÁ‹
-		KeyCheck();
-		switch (gameMode) {	// ƒƒCƒ“ˆ—
-		case GMODE_INIT:
-			GameInit();
-			gameMode = GMODE_TITLE;
-			PlaySoundMem(mainBgm, DX_PLAYTYPE_LOOP);
-			break;	
-		case TEST_GMODE_INIT:
-			testGameInit();
-			gameMode = GMODE_TITLE;
-			//PlaySoundMem(mainBgm, DX_PLAYTYPE_LOOP);
-			break;
-		case GMODE_TITLE:
-			//GetHitKeyStateAll(Key);
-			if (fadeIn) {
-				if (!FadeInScreen(2)) fadeIn = false;
-			}
-			else if (fadeOut) {
-				if (!FadeOutScreen(2))
-				{
-					gameMode = GMODE_GAME;
-					fadeOut = false;
-					fadeIn = true;
-				}
-			}
-			//else if (oldKey[P1_UP]&&trgKey[SPACE]) fadeOut = true;//W‰Ÿ‚µ‚È‚ª‚çSPACE‚ğ‰Ÿ‚·
-			//else if (oldKey[P1_DOWN] && trgKey[SPACE]) fadeOut = 1;
-			else if (CheckHitKey(KEY_INPUT_W)&&CheckHitKey(KEY_INPUT_SPACE)) fadeOut = 1;
-			GameTitle();
-			if (fadeIn) {
-				if (!FadeInScreen(2)) fadeIn = false;
-			}
-			else if (fadeOut) {
-				if (!FadeOutScreen(2))
-				{
-					gameMode = TEST_GMODE_GAME;
-					fadeOut = false;
-					fadeIn = true;
-				}
-			}
-			else if (CheckHitKey(KEY_INPUT_S) && CheckHitKey(KEY_INPUT_SPACE)) fadeOut = 1;
-		break;
-		case GMODE_GAME:
-			if (fadeIn) {
-				if (!FadeInScreen(5)) fadeIn = false;
-			}
-			else {
-				if (fadeOut) {
-					if (!FadeOutScreen(5)) {
-						gameMode = GMODE_OVER;
-//						StopSoundMem(mainBgm);
-//						PlaySoundMem(endBgm, DX_PLAYTYPE_BACK);
-						fadeOut = false;
-						fadeIn = true;
-					}
-				}
-				else if (player.visible == false) fadeOut = true;
-			}
-			LoadData();
-			GameMain();
-			break;
-		case TEST_GMODE_GAME:
-			if (fadeIn) {
-				if (!FadeInScreen(5)) fadeIn = false;
-			}
-			else {
-				if (fadeOut) {
-					if (!FadeOutScreen(5)) {
-						gameMode = GMODE_OVER;
-						//						StopSoundMem(mainBgm);
-						//						PlaySoundMem(endBgm, DX_PLAYTYPE_BACK);
-						fadeOut = false;
-						fadeIn = true;
-					}
-				}
-				else if (testPlayer.visible == false) fadeOut = true;
-			}
-			LoadData();
-			testGameMain();
-			break;
-		case GMODE_OVER:
-			if (fadeIn) {
-				if (!FadeInScreen(5)) fadeIn = false;
-			}
-			else if(fadeOut){
-				if(!FadeOutScreen(5)){
-					gameMode = GMODE_TITLE;
-					GameInit();
-					fadeOut = false;
-					fadeIn = true;
-				}
-			}
-			else
-			{
-				if (trgKey[SPACE]) fadeOut = true;
-			}
-			GameOver();
-			SaveData();
-			break;
-		default:
-			gameMode = GMODE_INIT;
-			GameInit();
-			break;
-		}
-		gameCounter++;
-		ScreenFlip();		// — ‰æ–Ê‚ğ•\‰æ–Ê‚ÉuŠÔƒRƒs[
-	}
-
-	DxLib_End();			// DXƒ‰ƒCƒuƒ‰ƒŠ‚ÌI—¹ˆ—
-	return 0;				// ‚±‚ÌƒvƒƒOƒ‰ƒ€‚ÌI—¹
+	return(hypot(posA.x - posB.x, posA.y - posB.y)<radiusA + radiusB);
 }
+int timecont = 0;
 
-/* -------ƒVƒXƒeƒ€‚Ì‰Šú‰»------- */
-bool SystemInit(void)
-{
-	// ----- ¼½ÃÑˆ—
-	SetWindowText("Shooting");
-	// ¼½ÃÑˆ—
-	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, 16);
+//”wŒi
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ChangeWindowMode(true);
-	if (DxLib_Init() == -1) {
-		return false;
+	SetMainWindowText("1816240_¼Z—D‘¾");
+	if (DxLib_Init() != 0) {
+		return -1;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	KeyCheckSystemInit();
+	//”wŒi—p
+	int bgH[4];
+	LoadDivGraph("img/bganim.png", 4, 4, 1, 1024, 192, bgH);
 
-	/* ---------- ƒOƒ‰ƒtƒBƒbƒN‚Ì“o˜^ ---------- */
-	// ÌßÚ²Ô°‰æ‘œ
-	PlayerSystemInit();
-	testPlayerSystemInit();
-	// ¼®¯Ä‰æ‘œ
-	ShotSystemInit();
-	// “G‰æ‘œ
-	EnemySystemInit();
-	// “G’e‰æ‘œ
-	BulletSystemInit();
-	// ”wŒi‰æ‘œ
-	StageSystemInit();
-	// ”š”j‰æ‘œ
-	BlastSystemInit();
-	// À²ÄÙ²Ò°¼Ş
-	titleImage = LoadGraph("image/title2.png");
-	titleBg = LoadGraph("image/stars.png");
-	// ¹Ş°Ñµ°ÊŞ°²Ò°¼Ş
-	gOverImage = LoadGraph("image/gameover.png");
-	// ½º±²Ò°¼Ş
-	LoadDivGraph("image/number16pix.png", 11, 11, 1, 16, 16, numImage, false);
-	LoadDivGraph("image/font16pix.png", 27, 27, 1, 16, 16, charImage, false);
-	// BGM
-	mainBgm = LoadSoundMem("bgm/main_bgm.mp3");
-	endBgm = LoadSoundMem("bgm/end_bgm.mp3");
+	int skyH = LoadGraph("img/sky.png");
+	int sky2H = LoadGraph("img/sky2.png");
+	//int mekakushi= LoadGraph("img/tama.png");
+	auto bulletH = LoadGraph("img/tama2.png");
+	auto bulletH2 = LoadGraph("img/tama3.png");
+	auto bulletH3 = LoadGraph("img/tama4.png");
+	auto bulletH4 = LoadGraph("img/tama5.png");
+	auto bulletH5 = LoadGraph("img/tama6.png");
+	//int bulletyou;
+	int playerH[10];
+	LoadDivGraph("img/player.png", 10, 5, 2, 16, 24, playerH);
 
-	return true;
-}
+	int enemyH[2];
+	int enemyH2[2];
+	int enemyH3[2];
+	int enemyH4[2];
+	int enemyH5[2];
+	LoadDivGraph("img/teki1.png", 2, 2, 1, 32, 32, enemyH);
+	LoadDivGraph("img/teki2.png", 2, 2, 1, 32, 32, enemyH2);
+	LoadDivGraph("img/teki3.png", 2, 2, 1, 32, 32, enemyH3);
+	LoadDivGraph("img/teki4.png", 2, 2, 1, 32, 32, enemyH4);
+	LoadDivGraph("img/teki5.png", 2, 2, 1, 32, 32, enemyH5);
+	//LoadDivGraph("img/enemy.png", 2, 2, 1, 32, 32, enemyH);
 
-/* -------ƒQ[ƒ€ƒ‹[ƒv“à‚Ì‰Šú‰»------- */
-void GameInit(void)
-{
-	// Ìª°ÄŞ¶³İÄ
-	fadeCnt = 0;
-	// ½º±
-	score = 0;
+	struct Bullet {
+		Position2 pos;//À•W
+		Vector2 vel;//‘¬“x
+		bool isActive = false;//¶‚«‚Ä‚é‚©`H
+	};
 
-	// ÌßÚ²Ô°•Ï”‰Šú‰»
-	PlayerGameInit();
-	// ¼®¯Ä•Ï”‰Šú‰»
-	ShotGameInit();
-	// “G•Ï”‰Šú‰»
-	EnemyGameInit();
-	// “G’e•Ï”‰Šú‰»
-	BulletGameInit();
-	// ”wŒi•Ï”‰Šú‰»
-	StageGameInit();
-	// ”š”j•Ï”‰Šú‰»
-	BlastGameInit();
-}
-void testGameInit(void)
-{
-	PlayerGameInit();
-}
+	int mekakusiposx = 0;
+	int mekakusiposy = -100;
+	//’e‚Ì”¼Œa
+	float bulletRadius = 5.0f;
 
-// ƒ^ƒCƒgƒ‹‰æ–Êˆ—
-void GameTitle(void)
-{
-	DrawGraph(0, 0, titleBg, true);
-	//	DrawString(0, 0, "TITLE", 0xffffff);
-	DrawGraph(0, 0, titleImage, true);
+	//©‹@‚Ì”¼Œa
+	float playerRadius = 10.0f;
 
-	hitKeyCnt++;
-	if (hitKeyCnt / 60 % 2 == 0) {
-		DrawString(320, 500, "wƒL[•SPACEƒL[‚ÅsoloƒXƒ^[ƒgI", 0xffffff, true);
-		DrawString(320, 530, "sƒL[•SPACEƒL[‚ÅPvPƒXƒ^[ƒgI", 0xffffff, true);
+	//“K“–‚É256ŒÂ‚­‚ç‚¢ì‚Á‚Æ‚­
+	Bullet bullets[1000];
 
-	}
-}
+	//Position2 enemypos(320, 25);//“GÀ•W
+	Position2 enemypos(100, -25);
+	Position2 playerpos(320, 400);//©‹@À•W
 
-void GameMain(void)
-{
-	if (trgKey[PAUSE]) {
-		pauseFlag = !pauseFlag;
-	}
-	if (pauseFlag) {
-		SetDrawBright(128, 128, 128);
-	}
-	else {
-		// ÌßÚ²Ô°‘€ìŠÖ”
-		PlayerControl();
-		// ¼®¯Ä‘€ìŠÖ”
-		ShotControl();
-		// “G‘€ìŠÖ”
-		EnemyControl();
-		// “G’e‘€ìŠÖ”
-		BulletControl();
-		// ”wŒi‘€ìŠÖ”
-		StageControl();
-		// “–‚½‚è”»’èŠÖ”
-		HitCheck();
+	unsigned int frame = 0;//ƒtƒŒ[ƒ€ŠÇ——p
 
-	}
-
-	if (pauseFlag) {
-		SetDrawBright(255, 255, 255);
-		DrawString(360, 292, "‚o‚`‚t‚r‚d", 0xffffff);
-	}
-
-	// •`‰æŠÖ”
-	GameDraw();
+	char keystate[256];
+	bool isDebugMode = false;
+	int skyy = 0;
+	int skyy2 = 0;
+	int bgidx = 0;
 
 
-	//	DrawString(0, 0, "MAIN", 0xffffff);
-	// ¹Ş°Ñ¶³İÀ°•\¦
-	//	DrawFormatString(0, 20, 0xffffff, "GameMain %d", gameCounter);
-}
-void testGameMain(void)
-{
-	// ÌßÚ²Ô°‘€ìŠÖ”
-	testPlayerCtrl();
-}
+	int spi = 1;
+	//	int tomegu = 0;
+	int tama = bulletH;
+	int teki = 0;  //GetRand(5);
+	int teki2 = teki;
+	
+	while (ProcessMessage() == 0) {
+		ClearDrawScreen();
 
-// ƒQ[ƒ€ƒI[ƒo[ˆ—
-void GameOver(void)
-{
-	//	DrawString(0, 0, "GAMEOVER", 0xffffff);
+		GetHitKeyStateAll(keystate);
 
-	DrawGraph(180, 50, gOverImage, true);
+		isDebugMode = keystate[KEY_INPUT_P];
 
-	hitKeyCnt++;
-	if (hitKeyCnt / 30 % 2 == 0) {
-		DrawString(300, 450, "ƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚Ä‚ËI", 0xffffff, true);
-	}
+		DrawExtendGraph(0, 0, 640, 480, bgH[bgidx / 8], false);
+		bgidx = (bgidx + 1) % 32;
 
-	// ½º±•`‰æ
-	DrawStatus("SCORE", score, 200);
-	DrawStatus("HISCORE", hiScore, 300);
-}
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
+		skyy = (skyy + 1) % 480;
+		skyy2 = (skyy2 + 2) % 480;
+		DrawExtendGraph(0, skyy, 640, skyy + 480, skyH, true);
+		DrawExtendGraph(0, skyy - 480, 640, skyy, skyH, true);
+		DrawExtendGraph(0, skyy2, 640, skyy2 + 480, sky2H, true);
+		DrawExtendGraph(0, skyy2 - 480, 640, skyy2, sky2H, true);
 
-// •`‰æˆ—
-void GameDraw(void)
-{
-	// ”wŒi•`‰æ
-	StageDraw();
-	// “G•`‰æ
-	EnemyDraw();
-	// “G’e•`‰æ
-	BulletDraw();
-	// ÌßÚ²Ô°•`‰æ
-	PlayerDraw();
-	// ¼®¯Ä•`‰æ
-	ShotDraw();
-	// ½º±•`‰æ
-	DrawStatusMain("SCORE", score, 50);
-	// ”š”j•`‰æ
-	BlastDraw();
 
-	DrawLine(716, 0, 716, SCREEN_SIZE_Y, 0xffffff);
-}
-void testGameDraw(void)
-{
-	testPlayerDraw();
-}
-// “–‚½‚è”»’è
-void HitCheck(void)
-{
-	// ´ÈĞ°‚ÆÌßÚ²Ô°‚Ì’e‚Æ‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < SHOT_MAX; i++) {
-		//		CHARACTER shotTemp = GetShot(i);
-		if (shot[i].visible) {
-			if (EnemyHitCheck(shot[i].pos, shot[i].sizeOffset)) {
-				shot[i].visible = false;
+		//ƒvƒŒƒCƒ„[
+		if (keystate[KEY_INPUT_RIGHT]) {
+			playerpos.x = min(640, playerpos.x + 4);
+		}
+		else if (keystate[KEY_INPUT_LEFT]) {
+			playerpos.x = max(0, playerpos.x - 4);
+		}
+		if (keystate[KEY_INPUT_UP]) {
+			playerpos.y = max(0, playerpos.y - 4);
+		}
+		else if (keystate[KEY_INPUT_DOWN]) {
+			playerpos.y = min(480, playerpos.y + 4);
+		}
+
+		int pidx = (frame / 4 % 2) * 5 + 3;
+		DrawRotaGraph(playerpos.x, playerpos.y, 2.0f, 0.0f, playerH[pidx], true);
+		if (isDebugMode) {
+			//©‹@‚Ì–{‘Ì(“–‚½‚è”»’è)
+			DrawCircle(playerpos.x, playerpos.y, playerRadius, 0xffaaaa, false, 3);
+		}
+		float angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+		//’e”­Ë
+
+		//timecont++;
+
+		if (teki2 = 0) //(timecont < 90 || timecont>340 && timecont>440)    CheckHitKey(KEY_INPUT_A)
+		{
+
+
+			tama = bulletH;
+			for (int i = 0; i < 3; i++)
+			{
+
+
+				if (frame % 12 == 0)
+				{
+					for (auto& b : bullets) {
+						if (!b.isActive) {
+							b.pos = enemypos;
+							if (i == 0)
+							{
+								angle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+							}
+							else
+							{
+								angle -= 0.2f;
+							}
+							b.vel = Vector2(cos(angle), sin(angle)).Normalized() * 5;//DX_PI
+																					 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							b.isActive = true;
+							break;
+						}
+					}
+				}
 			}
 		}
-	}
 
-	// ÌßÚ²Ô°‚Æ´ÈĞ°‚Ì’e‚Æ‚Ì“–‚½‚è”»’è
-	for (int i = 0; i < BULLET_MAX; i++) {
-		//		CHARACTER eShotTemp = GetShotE(i);
-		if (bullet[i].visible) {
-			if (PlayerHitCheck(bullet[i].pos, bullet[i].sizeOffset)) {
-				bullet[i].visible = false;
+
+		if (teki2=1)//(timecont>170 && timecont<270)   CheckHitKey(KEY_INPUT_S)
+		{
+			tama = bulletH2;
+			for (int i = 0; i < 50; i++)
+			{
+
+
+				if (frame % 12 == 0) {
+					for (auto& b : bullets) {
+						if (!b.isActive) {
+							b.pos = enemypos;
+							if (i == 0)
+							{
+								angle += 0.5f;
+							}
+							else if (i == 1)
+							{
+								angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+							}
+							else
+							{
+								angle -= 0.5f;
+							}
+							b.vel = Vector2(cos(angle), sin(angle)).Normalized() * 5;//DX_PI
+																					 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							b.isActive = true;
+							break;
+						}
+					}
+				}
 			}
 		}
+
+		if (teki2=2)//(timecont > 440 && timecont < 550)  CheckHitKey(KEY_INPUT_D)
+		{
+
+			tama = bulletH3;
+			for (int i = 0; i < GetRand(300); i++)
+			{
+
+
+				if (frame % 12 == 0) {
+					for (auto& b : bullets) {
+						if (!b.isActive) {
+							b.pos = enemypos;
+							if (i == 0)
+							{
+								angle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+							}
+							else
+							{
+								angle -= 0.2f;
+							}
+							b.vel = Vector2(cos(angle), sin(angle)).Normalized() * (GetRand(10) + 1);//DX_PI
+																									 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							b.isActive = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+
+
+
+		if (teki2=3) //(timecont < 90 || timecont>340 && timecont>440) CheckHitKey(KEY_INPUT_F)
+		{
+
+			tama = bulletH4;
+
+			for (int i = 0; i < 7; i++)
+			{
+
+
+				if (frame % 12 == 0) {
+					for (auto& b : bullets) {
+						if (!b.isActive) {
+							b.pos = enemypos;
+							if (i == 0)
+							{
+								angle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+							}
+							else
+							{
+								angle -= 0.2f;
+							}
+							b.vel = Vector2(cos(angle), sin(angle)).Normalized() * 7;//DX_PI
+																							  //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							b.isActive = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (teki2=4) //(timecont < 90 || timecont>340 && timecont>440)  CheckHitKey(KEY_INPUT_G)
+		{
+
+			tama = bulletH5;
+
+			for (int i = 0; i < GetRand(30); i++)
+			{
+
+
+				if (frame % 12 == 0) {
+					for (auto& b : bullets) {
+						if (!b.isActive) {
+							b.pos = enemypos;
+							if (i == 0)
+							{
+								angle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+							}
+							else
+							{
+								angle -= 0.2f;
+							}
+							b.vel = Vector2(cos(angle), sin(angle)).Normalized() * 3;//DX_PI
+																					 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							b.isActive = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		mekakusiposx += (GetRand(30));
+		mekakusiposy += (GetRand(30));
+		/*if (timecont > 650)
+		{
+		timecont = 0;
+		}*/
+		//for (int i = 0; -1 < i < 3; i++) {}
+
+		//’e‚ÌXV‚¨‚æ‚Ñ•\¦
+		for (auto& b : bullets) {
+			if (!b.isActive) {
+				continue;
+			}
+
+			//’e‚ÌŒ»İÀ•W‚É’e‚ÌŒ»İ‘¬“x‚ğ‰ÁZ‚µ‚Ä‚­‚¾‚³‚¢
+			b.pos = b.pos + b.vel;
+
+			//’e‚ÌŠp“x‚ğatan2‚ÅŒvZ‚µ‚Ä‚­‚¾‚³‚¢Bangle‚É’l‚ğ“ü‚ê‚é‚ñ‚¾‚æƒIƒD
+			float angle2 = atan2(b.vel.y, b.vel.x);
+			
+				DrawRotaGraph(b.pos.x, b.pos.y, 1.0f, angle2, tama, true);
+			
+			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
+			if (isDebugMode) {
+				//’e‚Ì–{‘Ì(“–‚½‚è”»’è)
+				DrawCircle(b.pos.x, b.pos.y, bulletRadius, 0x0000ff, false, 3);
+			}
+			//’e‚ğE‚·
+			if (b.pos.x + 16 < 0 || b.pos.x - 16 > 640 ||
+				b.pos.y + 24 < 0 || b.pos.y - 24 > 480) {
+				b.isActive = false;
+			}
+			if (mekakusiposx + 16 < 0 || mekakusiposx - 16 > 640 ||
+				mekakusiposy - 100 < 0 || mekakusiposy - 24 > 480) {
+				mekakusiposx = 0;
+				mekakusiposy = -100;
+			}
+			//‚ ‚½‚èI
+			//«‚ÌIsHit‚ÍÀ‘•‚ğ‘‚¢‚Ä‚Ü‚¹‚ñB©•ª‚Å‘‚¢‚Ä‚­‚¾‚³‚¢B
+			if (IsHit(b.pos, bulletRadius, playerpos, playerRadius)) {
+				//“–‚½‚Á‚½”½‰‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢B
+				b.isActive = false;
+			}
+		}
+
+		//“G‚Ì•\¦
+		enemypos.x = abs((int)((frame + 320) % 1280) - 640);
+		enemypos.y = enemypos.y+5.0f;
+		if (enemypos.y >= 600)
+		{
+			enemypos.y = -40;
+			teki2 +=1;
+			//teki = GetRand(5);
+			//teki2 = teki;
+		}
+		if (teki2 <= 5)
+		{
+			teki2 = 0;
+		}
+		int eidx = (frame / 4 % 2);
+		DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH[eidx], true);
+
+		if (isDebugMode) {
+			//“G‚Ì–{‘Ì(“–‚½‚è”»’è)
+			DrawCircle(enemypos.x, enemypos.y, 5, 0xffffff, false, 3);
+		}
+		++frame;
+		ScreenFlip();
 	}
-}
 
-// ----- Ìª°ÄŞ±³Äˆ—
-bool FadeOutScreen(int fadeStep)
-{
-	fadeCnt += fadeStep;
-	if (fadeCnt <= 255) {
-		SetDrawBright(255 - fadeCnt, 255 - fadeCnt, 255 - fadeCnt);
-		return true;
-	}
-	else
-	{
-		SetDrawBright(0, 0, 0);
-		fadeCnt = 0;
-		return false;
-	}
-}
+	DxLib_End();
 
-// ----- Ìª°ÄŞ²İˆ—
-bool FadeInScreen(int fadeStep)
-{
-	fadeCnt += fadeStep;
-	if (fadeCnt <= 255) {
-		SetDrawBright(fadeCnt, fadeCnt, fadeCnt);
-		return true;
-	}
-	else {
-		SetDrawBright(255, 255, 255);
-		fadeCnt = 0;
-		return false;
-	}
-}
-
-void AddScore(int point)
-{
-	// ½º±‚Ì‰ÁZ
-	score += point;
-	// ½º±‚ªÊ²½º±‚æ‚è‘å‚«‚­‚È‚ê‚Î½º±‚ğÊ²½º±‚É‚·‚é
-	if (hiScore < score) hiScore = score;
-}
-
-// ½º±‚Ì•\¦(¹Ş°Ñµ°ÊŞ°‰æ–Ê)
-void DrawStatus(const char* title, int value, int top)
-{
-	int digit = 0;
-	int numTemp = value;
-
-	// •¶š‚Ì•`‰æ
-	for (int i = 0; i < strlen(title); i++) {
-		DrawGraph((290) + i * 16, top,
-			charImage[*(title + i) - 64], true);
-	}
-
-	// ’l‚Ì•`‰æ
-	while (numTemp > 0) {
-		DrawGraph(440 - (digit + 1) * 16 - (10), top + 35,
-			numImage[numTemp % 10 + 1], true);
-		numTemp /= 10;
-		digit++;
-	}
-}
-
-// ½º±‚Ì•\¦(¹Ş°ÑÒ²İ‰æ–Ê)
-void DrawStatusMain(const char* title, int value, int top)
-{
-	int digit = 0;
-	int numTemp = value;
-
-	// •¶š‚Ì•`‰æ
-	for (int i = 0; i < strlen(title); i++) {
-		DrawGraph((730) + i * 16, top,
-			charImage[*(title + i) - 64], true);
-	}
-
-	// ’l‚Ì•`‰æ
-	while (numTemp > 0) {
-		DrawGraph(SCREEN_SIZE_X - (digit + 1) * 16 - (10), top + 35,
-			numImage[numTemp % 10 + 1], true);
-		numTemp /= 10;
-		digit++;
-	}
-}
-
-bool SaveData(void)
-{
-	FILE* fp;
-
-	fopen_s(&fp, fileName, "wb");
-	if (fp == NULL) {
-		return false;
-	}
-	else {
-		fwrite(&fileData, sizeof(fileData), 1, fp);
-		fclose(fp);
-
-		return true;
-	}
-}
-
-bool LoadData(void)
-{
-	FILE* fp;
-
-	fopen_s(&fp, fileName, "rb");
-	if (fp == NULL) {
-		return false;
-	}
-	else {
-		fread(&fileData, sizeof(fileData), 1, fp);
-		fclose(fp);
-
-		return true;
-	}
+	return 0;
 }
