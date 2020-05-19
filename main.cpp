@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	LoadDivGraph("img/teki4.png", 2, 2, 1, 32, 32, enemyH4);
 	LoadDivGraph("img/teki5.png", 2, 2, 1, 32, 32, enemyH5);
 	//LoadDivGraph("img/enemy.png", 2, 2, 1, 32, 32, enemyH);
-
+	int tekihyouji = 1;
 	struct Bullet {
 		Position2 pos;//À•W
 		Vector2 vel;//‘¬“x
@@ -73,7 +73,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	float playerRadius = 10.0f;
 
 	//“K“–‚É256ŒÂ‚­‚ç‚¢ì‚Á‚Æ‚­
-	Bullet bullets[1000];
+	Bullet bullets[100];
 
 	//Position2 enemypos(320, 25);//“GÀ•W
 	Position2 enemypos(100, -25);
@@ -147,35 +147,56 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		switch (tekiMode)//“Gˆ—
 		{
 		case TEKI_INIT:
-			teki2 = GetRand(100);
-			teki = teki2;
+			teki = GetRand(100);
+		//	teki = teki2;
 			tekiMode = TAMA_MAIN;
 			break;
 		case TAMA_MAIN:
 
-			if (teki >= 0 || teki <= 19)
+		/*	if (teki >= 0 || teki <= 19)
 			{
 				tekiMode = TAMA_1;
 			}
-			else if (teki >= 20 || teki <= 39)
+			if (teki >= 20 || teki <= 39)
 			{
 				tekiMode = TAMA_2;
 			}
-			else if (teki >= 40 || teki <= 59)
+			if (teki >= 40 || teki <= 59)
 			{
 				tekiMode = TAMA_3;
 			}
-			else if (teki >= 60 || teki <= 79)
+			if (teki >= 60 || teki <= 79)
 			{
 				tekiMode = TAMA_4;
 			}
-			else if (teki >= 80 || teki <= 100)
+			if (teki >= 80 || teki <= 100)
+			{
+				tekiMode = TAMA_5;
+			}*/
+			if (teki >= 0 && teki <= 19)
+			{
+				tekiMode = TAMA_1;
+			}
+			else if (teki >= 20 && teki <= 39)
+			{
+				tekiMode = TAMA_2;
+			}
+			else if (teki >= 40 && teki <= 59)
+			{
+				tekiMode = TAMA_3;
+			}
+			else if (teki >= 60 && teki <= 79)
+			{
+				tekiMode = TAMA_4;
+			}
+			else if (teki >= 80 && teki <= 100)
 			{
 				tekiMode = TAMA_5;
 			}
 			break;
 		case TAMA_1:
 			tama = bulletH;
+			tekihyouji = 1;
 			for (int i = 0; i < 3; i++)
 			{
 
@@ -212,6 +233,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case TAMA_2:
 			tama = bulletH2;
+			tekihyouji = 2;
 			for (int i = 0; i < 50; i++)
 			{
 
@@ -247,6 +269,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case TAMA_3:
 			tama = bulletH3;
+			tekihyouji = 3;
 			for (int i = 0; i < GetRand(300); i++)
 			{
 
@@ -281,7 +304,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case TAMA_4:
 			tama = bulletH4;
-
+			tekihyouji = 4;
 			for (int i = 0; i < 7; i++)
 			{
 
@@ -316,7 +339,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		case TAMA_5:
 			tama = bulletH5;
-
+			tekihyouji = 5;
 			for (int i = 0; i < GetRand(30); i++)
 			{
 
@@ -398,7 +421,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//“G‚Ì•\Ž¦
 		
 			enemypos.x = abs((int)((frame + 320) % 1280) - 640);
-			enemypos.y = enemypos.y + 5.0f;
+			enemypos.y = enemypos.y + 0.3f;
 			/*if (enemypos.y >= 600)
 			{
 				enemypos.y = -40;
@@ -409,8 +432,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				teki2 = 0;
 			}*/
 			int eidx = (frame / 4 % 2);
-			DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH[eidx], true);
-		
+
+			if (tekihyouji = 1)
+			{
+				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH[eidx], true);
+			}
+			else if (tekihyouji=2)
+			{
+				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH2[eidx], true);
+			}
+			else if (tekihyouji = 3)
+			{
+				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH3[eidx], true);
+			}
+			else if (tekihyouji = 4)
+			{
+				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH4[eidx], true);
+			}
+			else if (tekihyouji = 5)
+			{
+				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH5[eidx], true);
+			}
 		if (isDebugMode) {
 			//“G‚Ì–{‘Ì(“–‚½‚è”»’è)
 			DrawCircle(enemypos.x, enemypos.y, 5, 0xffffff, false, 3);
