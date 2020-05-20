@@ -42,6 +42,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	auto bulletH3 = LoadGraph("img/tama4.png");
 	auto bulletH4 = LoadGraph("img/tama5.png");
 	auto bulletH5 = LoadGraph("img/tama6.png");
+
+	auto playerblle = LoadGraph("img/tama2.png");
+	auto playerblle2 = LoadGraph("img/tama3.png");
+	auto playerblle3 = LoadGraph("img/tama4.png");
+	auto playerblle4 = LoadGraph("img/tama5.png");
+	auto playerblle5 = LoadGraph("img/tama6.png");
 	//int bulletyou;
 	int playerH[10];
 	LoadDivGraph("img/player.png", 10, 5, 2, 16, 24, playerH);
@@ -64,16 +70,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		bool isActive = false;//ê∂Ç´ÇƒÇÈÇ©Å`ÅH
 	};
 
+	struct PlayerBullet {
+		Position2 pos;//ç¿ïW
+		Vector2 vel;//ë¨ìx
+		bool isActive = false;//ê∂Ç´ÇƒÇÈÇ©Å`ÅH
+	};
+
 	int mekakusiposx = 0;
 	int mekakusiposy = -100;
 	//íeÇÃîºåa
 	float bulletRadius = 5.0f;
 
+	//player
+	float pbulletRadius = 5.0f;
 	//é©ã@ÇÃîºåa
 	float playerRadius = 10.0f;
 
 	//ìKìñÇ…256å¬Ç≠ÇÁÇ¢çÏÇ¡Ç∆Ç≠
 	Bullet bullets[100];
+	PlayerBullet pbullets[100];
 
 	//Position2 enemypos(320, 25);//ìGç¿ïW
 	Position2 enemypos(100, -25);
@@ -91,7 +106,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int spi = 1;
 	//	int tomegu = 0;
 	int tama = bulletH;
-	
+	int tamaP = playerblle;
 	
 	//int tekiTime = 0;
 	
@@ -135,6 +150,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DrawCircle(playerpos.x, playerpos.y, playerRadius, 0xffaaaa, false, 3);
 		}
 		float angle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+
+
+		float pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
 		//íeî≠éÀ
 
 		//timecont++;
@@ -382,11 +400,172 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			break;
 		}
-		for (auto& b : bullets) {
+
+
+
+		if (keystate[KEY_INPUT_A])
+		{
+			tamaP = bulletH;
+			
+			for (int i = 0; i < 3; i++)
+			{
+
+
+				if (frame % 12 == 0)
+				{
+					for (auto& pb : bullets) {
+						if (!pb.isActive) {
+							pb.pos = playerpos;
+							if (i == 0)
+							{
+								pangle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+							}
+							else
+							{
+								pangle -= 0.2f;
+							}
+							pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+																					 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							pb.isActive = true;
+							
+							break;
+
+						}
+					}
+				}
+			}
+		}
+
+		if (keystate[KEY_INPUT_SPACE])
+		{
+			//tamaP = playerblle5;
+			//for (int i = 0; i < GetRand(30)+1; i++)
+			//{
+
+
+			//	if (frame % 12 == 0) 
+			//	{
+			//		for (auto& pb : pbullets)
+			//		{
+			//			if (!pb.isActive) 
+			//			{
+			//				pb.pos = playerpos;
+			//				if (i == 0)
+			//				{
+			//					pangle += 0.2f;
+			//				}
+			//				else if (i == 1)
+			//				{
+			//					pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+			//				}
+			//				else
+			//				{
+			//					pangle -= 0.2f;
+			//				}
+			//				pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 3;//DX_PI
+			//			    pb.vel = ((enemypos - playerpos).Normalized()*i)*5.0f;//DX_PI
+
+			//				pb.isActive = true;
+			//				
+			//				break;
+			//			}
+			//		}
+			//	}
+			//}
+
+			tamaP = playerblle3;
+			
+			for (int i = 0; i < GetRand(300); i++)
+			{
+
+
+				if (frame % 12 == 0) {
+					for (auto& pb : pbullets) {
+						if (!pb.isActive) {
+							pb.pos = playerpos;
+							if (i == 0)
+							{
+								pangle += 0.2f;
+							}
+							else if (i == 1)
+							{
+								pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+							}
+							else
+							{
+								pangle -= 0.2f;
+							}
+							pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * (GetRand(10) + 1);//DX_PI
+																									 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+							pb.isActive = true;
+							
+						}
+					}
+				}
+			}
+		}
+
+
+
+		//player
+		for (auto& pb : pbullets)
+		{
+			if (!pb.isActive) {
+				continue;
+			}
+
+
+			//íeÇÃåªç›ç¿ïWÇ…íeÇÃåªç›ë¨ìxÇâ¡éZÇµÇƒÇ≠ÇæÇ≥Ç¢
+			pb.pos = pb.pos + pb.vel;
+
+			//íeÇÃäpìxÇatan2Ç≈åvéZÇµÇƒÇ≠ÇæÇ≥Ç¢ÅBangleÇ…ílÇì¸ÇÍÇÈÇÒÇæÇÊÉIÉD
+			float angle2 = atan2(pb.vel.y, pb.vel.x);
+
+			DrawRotaGraph(pb.pos.x, pb.pos.y, 1.0f, angle2, tamaP, true);
+
+
+
+
+
+
+
+
+			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
+			if (isDebugMode) {
+				//íeÇÃñ{ëÃ(ìñÇΩÇËîªíË)
+				DrawCircle(pb.pos.x, pb.pos.y, pbulletRadius, 0x0000ff, false, 3);
+			}
+			//íeÇéEÇ∑
+			if (pb.pos.x + 16 < 0 || pb.pos.x - 16 > 640 ||
+				pb.pos.y + 24 < 0 || pb.pos.y - 24 > 480) {
+				pb.isActive = false;
+			}
+			
+			//Ç†ÇΩÇËÅI
+			//Å´ÇÃIsHitÇÕé¿ëïÇèëÇ¢ÇƒÇ‹ÇπÇÒÅBé©ï™Ç≈èëÇ¢ÇƒÇ≠ÇæÇ≥Ç¢ÅB
+			//if (IsHit(pb.pos, pbulletRadius,enemypos, playerRadius)) {
+			//	//ìñÇΩÇ¡ÇΩîΩâûÇèëÇ¢ÇƒÇ≠ÇæÇ≥Ç¢ÅB
+			//	pb.isActive = false;
+			//}
+		}
+
+
+
+		
+		//ìG
+		for (auto& b : bullets) 
+		{
 			if (!b.isActive) {
 				continue;
 			}
 
+			
 			//íeÇÃåªç›ç¿ïWÇ…íeÇÃåªç›ë¨ìxÇâ¡éZÇµÇƒÇ≠ÇæÇ≥Ç¢
 			b.pos = b.pos + b.vel;
 
@@ -395,6 +574,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 				DrawRotaGraph(b.pos.x, b.pos.y, 1.0f, angle2, tama, true);
 			
+
+			
+
+				
+
+
+
 			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
 			if (isDebugMode) {
 				//íeÇÃñ{ëÃ(ìñÇΩÇËîªíË)
@@ -421,7 +607,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//ìGÇÃï\é¶
 		
 			enemypos.x = abs((int)((frame + 320) % 1280) - 640);
-			enemypos.y = enemypos.y + 0.3f;
+			enemypos.y = enemypos.y + 3.0f;
 			/*if (enemypos.y >= 600)
 			{
 				enemypos.y = -40;
@@ -453,6 +639,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			{
 				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH5[eidx], true);
 			}
+
 		if (isDebugMode) {
 			//ìGÇÃñ{ëÃ(ìñÇΩÇËîªíË)
 			DrawCircle(enemypos.x, enemypos.y, 5, 0xffffff, false, 3);
