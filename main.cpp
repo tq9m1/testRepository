@@ -10,6 +10,7 @@
 ///@param radiusB Bの半径
 
 TEKI_MODE tekiMode;
+PLAYER_MODE playerMode;
 
 int teki2 = 0;
 int teki = 0;//GetRand(100);
@@ -86,6 +87,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//自機の半径
 	float playerRadius = 10.0f;
 
+	//敵の半径
+	float enemyRadius = 15.0f;
 	//適当に256個くらい作っとく
 	Bullet bullets[100];
 	PlayerBullet pbullets[100];
@@ -108,6 +111,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int tama = bulletH;
 	int tamaP = playerblle;
 	
+	int plyertama =0;
+
+	bool tamaflog = false;
+
 	//int tekiTime = 0;
 	
 	while (ProcessMessage() == 0) {
@@ -158,7 +165,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//timecont++;
 		//mekakusiposx += (GetRand(30));
 		//mekakusiposy += (GetRand(30));
-		
+
 		//for (int i = 0; -1 < i < 3; i++) {}
 
 		//弾の更新および表示
@@ -166,31 +173,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 		case TEKI_INIT:
 			teki = GetRand(100);
-		//	teki = teki2;
+			//	teki = teki2;
 			tekiMode = TAMA_MAIN;
 			break;
 		case TAMA_MAIN:
 
-		/*	if (teki >= 0 || teki <= 19)
-			{
-				tekiMode = TAMA_1;
-			}
-			if (teki >= 20 || teki <= 39)
-			{
-				tekiMode = TAMA_2;
-			}
-			if (teki >= 40 || teki <= 59)
-			{
-				tekiMode = TAMA_3;
-			}
-			if (teki >= 60 || teki <= 79)
-			{
-				tekiMode = TAMA_4;
-			}
-			if (teki >= 80 || teki <= 100)
-			{
-				tekiMode = TAMA_5;
-			}*/
+			/*	if (teki >= 0 || teki <= 19)
+				{
+					tekiMode = TAMA_1;
+				}
+				if (teki >= 20 || teki <= 39)
+				{
+					tekiMode = TAMA_2;
+				}
+				if (teki >= 40 || teki <= 59)
+				{
+					tekiMode = TAMA_3;
+				}
+				if (teki >= 60 || teki <= 79)
+				{
+					tekiMode = TAMA_4;
+				}
+				if (teki >= 80 || teki <= 100)
+				{
+					tekiMode = TAMA_5;
+				}*/
 			if (teki >= 0 && teki <= 19)
 			{
 				tekiMode = TAMA_1;
@@ -242,12 +249,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							b.isActive = true;
 							if (enemypos.y >= 600) tekiMode = TEKI_OWARI;
 							break;
-							
+
 						}
 					}
 				}
 			}
-			
+
 			break;
 		case TAMA_2:
 			tama = bulletH2;
@@ -278,12 +285,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 							b.isActive = true;
 							if (enemypos.y >= 600) tekiMode = TEKI_OWARI;
 							break;
-							
+
 						}
 					}
 				}
 			}
-			
+
 			break;
 		case TAMA_3:
 			tama = bulletH3;
@@ -353,7 +360,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 			}
-			
+
 			break;
 		case TAMA_5:
 			tama = bulletH5;
@@ -388,7 +395,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					}
 				}
 			}
-			
+
 			break;
 		case TEKI_OWARI:
 
@@ -401,119 +408,466 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			break;
 		}
 
-
-
-		if (keystate[KEY_INPUT_A])
+		if (IsHit(enemypos, enemyRadius, playerpos, playerRadius))
 		{
-			tamaP = bulletH;
-			
-			for (int i = 0; i < 3; i++)
+			//当たった反応を書いてください。
+			enemypos.y = 1000;
+			//playerMode = PLYER_INIT;
+
+			tamaflog = true;
+			plyertama = teki;
+		}
+
+
+		if (tamaflog = true)
+		{
+			if (plyertama >= 0 && plyertama <= 19)
 			{
-
-
-				if (frame % 12 == 0)
+				if (keystate[KEY_INPUT_A])
 				{
-					for (auto& pb : bullets) {
-						if (!pb.isActive) {
-							pb.pos = playerpos;
-							if (i == 0)
-							{
-								pangle += 0.2f;
-							}
-							else if (i == 1)
-							{
-								pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
-							}
-							else
-							{
-								pangle -= 0.2f;
-							}
-							pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
-																					 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+					tamaP = bulletH;
 
-							pb.isActive = true;
-							
-							break;
+					for (int i = 0; i < 3; i++)
+					{
 
+
+						if (frame % 12 == 0)
+						{
+							for (auto& pb : pbullets)
+							{
+								if (!pb.isActive)
+								{
+									pb.pos = playerpos;
+									if (i == 0)
+									{
+										pangle += 0.2f;
+									}
+									else if (i == 1)
+									{
+										pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+									}
+									else
+									{
+										pangle -= 0.2f;
+									}
+									pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+																								//b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+									pb.isActive = true;
+								}
+							}
 						}
 					}
 				}
 			}
-		}
-
-		if (keystate[KEY_INPUT_SPACE])
-		{
-			//tamaP = playerblle5;
-			//for (int i = 0; i < GetRand(30)+1; i++)
-			//{
-
-
-			//	if (frame % 12 == 0) 
-			//	{
-			//		for (auto& pb : pbullets)
-			//		{
-			//			if (!pb.isActive) 
-			//			{
-			//				pb.pos = playerpos;
-			//				if (i == 0)
-			//				{
-			//					pangle += 0.2f;
-			//				}
-			//				else if (i == 1)
-			//				{
-			//					pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
-			//				}
-			//				else
-			//				{
-			//					pangle -= 0.2f;
-			//				}
-			//				pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 3;//DX_PI
-			//			    pb.vel = ((enemypos - playerpos).Normalized()*i)*5.0f;//DX_PI
-
-			//				pb.isActive = true;
-			//				
-			//				break;
-			//			}
-			//		}
-			//	}
-			//}
-
-			tamaP = playerblle3;
-			
-			for (int i = 0; i < GetRand(300); i++)
+			else if (plyertama >= 20 && plyertama <= 39)
 			{
+				if (keystate[KEY_INPUT_A])
+				{
+					tamaP = bulletH2;
+
+					for (int i = 0; i < 50; i++)
+					{
 
 
-				if (frame % 12 == 0) {
-					for (auto& pb : pbullets) {
-						if (!pb.isActive) {
-							pb.pos = playerpos;
-							if (i == 0)
-							{
-								pangle += 0.2f;
-							}
-							else if (i == 1)
-							{
-								pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
-							}
-							else
-							{
-								pangle -= 0.2f;
-							}
-							pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * (GetRand(10) + 1);//DX_PI
-																									 //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+						if (frame % 12 == 0) {
+							for (auto& pb : pbullets) {
+								if (!pb.isActive) {
+									pb.pos = playerpos;
+									if (i == 0)
+									{
+										pangle += 0.5f;
+									}
+									else if (i == 1)
+									{
+										pangle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+									}
+									else
+									{
+										pangle -= 0.5f;
+									}
+									pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+																							   //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
 
-							pb.isActive = true;
-							
+
+									pb.isActive = true;
+
+
+
+									break;
+
+
+
+								}
+							}
 						}
 					}
 				}
 			}
+			else if (plyertama >= 40 && plyertama <= 59)
+			{
+				if (keystate[KEY_INPUT_A])
+				{
+					tamaP = playerblle3;
+
+					for (int i = 0; i < GetRand(300); i++)
+					{
+
+
+						if (frame % 12 == 0) {
+							for (auto& pb : pbullets) {
+								if (!pb.isActive) {
+									pb.pos = playerpos;
+									if (i == 0)
+									{
+										pangle += 0.2f;
+									}
+									else if (i == 1)
+									{
+										pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+									}
+									else
+									{
+										pangle -= 0.2f;
+									}
+									pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * (GetRand(10) + 1);//DX_PI
+																												//b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+
+									pb.isActive = true;
+
+
+
+								}
+							}
+						}
+					}
+				}
+			}
+			else if (plyertama >= 60 && plyertama <= 79)
+			{
+				if (keystate[KEY_INPUT_A])
+				{
+					tamaP = playerblle4;
+
+					for (int i = 0; i < 7; i++)
+					{
+
+						if (frame % 12 == 0)
+						{
+							for (auto& pb : pbullets) {
+								if (!pb.isActive) {
+									pb.pos = playerpos;
+									if (i == 0)
+									{
+										pangle += 0.2f;
+									}
+									else if (i == 1)
+									{
+										pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+									}
+									else
+									{
+										pangle -= 0.2f;
+									}
+									pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 7;//DX_PI
+
+
+
+									pb.isActive = true;
+
+
+
+
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+			else if (plyertama >= 80 && plyertama <= 100)
+			{
+				if (keystate[KEY_INPUT_A])
+				{
+					tamaP = playerblle5;
+
+					for (int i = 0; i < GetRand(30); i++)
+					{
+
+						if (frame % 12 == 0)
+						{
+							for (auto& pb : pbullets) {
+								if (!pb.isActive) {
+									pb.pos = playerpos;
+									if (i == 0)
+									{
+										pangle += 0.2f;
+									}
+									else if (i == 1)
+									{
+										pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+									}
+									else
+									{
+										pangle -= 0.2f;
+									}
+									pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+
+
+									pb.isActive = true;
+
+
+
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+
 		}
+		else
+		{
+
+		}
+		//////////////////////////////////////////////////////////////////////////////
+				//switch (playerMode)
+				//{
+				//case PLYER_INIT:
+
+				//	if (IsHit(enemypos, enemyRadius, playerpos, playerRadius)) {
+				//		//当たった反応を書いてください。
+				//		//enemypos.y = 1000;
+				//		// playerMode = PLYER_INIT;
+				//		plyertama = teki;
+				//	}
+				//	if (plyertama >= 0 && plyertama <= 19)
+				//	{
+				//		tekiMode = TAMA_1;
+				//	}
+				//	else if (plyertama >= 20 && plyertama <= 39)
+				//	{
+				//		tekiMode = TAMA_2;
+				//	}
+				//	else if (plyertama >= 40 && plyertama <= 59)
+				//	{
+				//		tekiMode = TAMA_3;
+				//	}
+				//	else if (plyertama >= 60 && plyertama <= 79)
+				//	{
+				//		tekiMode = TAMA_4;
+				//	}
+				//	else if (plyertama >= 80 && plyertama <= 100)
+				//	{
+				//		tekiMode = TAMA_5;
+				//	}
+				//	break;
+				//case PTAMA_1:
+				//	tamaP = bulletH;
+
+				//	for (int i = 0; i < 3; i++)
+				//	{
+
+
+				//		if (frame % 12 == 0)
+				//		{
+				//			for (auto& pb : pbullets) {
+				//				if (!pb.isActive) {
+				//					pb.pos = playerpos;
+				//					if (i == 0)
+				//					{
+				//						pangle += 0.2f;
+				//					}
+				//					else if (i == 1)
+				//					{
+				//						pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+				//					}
+				//					else
+				//					{
+				//						pangle -= 0.2f;
+				//					}
+				//					pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+				//																				//b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+				//					if (IsHit(enemypos, enemyRadius, playerpos, playerRadius)) {
+				//						//当たった反応を書いてください。
+				//						enemypos.y = 1000;
+				//						playerMode = PLYER_INIT;
+				//						plyertama = teki;
+				//					}
+				//					pb.isActive = true;
+
+				//					
+
+				//					break;
+
+				//				}
+				//			}
+				//		}
+				//	}
+				//	break;
+				//case PTAMA_2:
+				//	tamaP = bulletH2;
+
+				//	for (int i = 0; i < 50; i++)
+				//	{
+
+
+				//		if (frame % 12 == 0) {
+				//			for (auto& b : pbullets) {
+				//				if (!b.isActive) {
+				//					b.pos = playerpos;
+				//					if (i == 0)
+				//					{
+				//						pangle += 0.5f;
+				//					}
+				//					else if (i == 1)
+				//					{
+				//						pangle = atan2(playerpos.y - enemypos.y, playerpos.x - enemypos.x);
+				//					}
+				//					else
+				//					{
+				//						pangle -= 0.5f;
+				//					}
+				//					b.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+				//																			   //b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+				//					
+
+				//					b.isActive = true;
+
+				//					
+
+				//					break;
 
 
 
-		//player
+				//				}
+				//			}
+				//		}
+				//	}
+				//	break;
+				//case PTAMA_3:
+				//	tamaP = playerblle3;
+
+				//	for (int i = 0; i < GetRand(300); i++)
+				//	{
+
+
+				//		if (frame % 12 == 0) {
+				//			for (auto& pb : pbullets) {
+				//				if (!pb.isActive) {
+				//					pb.pos = playerpos;
+				//					if (i == 0)
+				//					{
+				//						pangle += 0.2f;
+				//					}
+				//					else if (i == 1)
+				//					{
+				//						pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+				//					}
+				//					else
+				//					{
+				//						pangle -= 0.2f;
+				//					}
+				//					pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * (GetRand(10) + 1);//DX_PI
+				//																								//b.vel = ((playerpos - enemypos).Normalized()*i)*5.0f;//DX_PI
+				//					
+				//					pb.isActive = true;
+
+				//					
+
+				//				}
+				//			}
+				//		}
+				//	}
+				//	break;
+				//case PTAMA_4:
+				//	tamaP = playerblle4;
+
+				//	for (int i = 0; i < 7; i++)
+				//	{
+
+				//		if (frame % 12 == 0)
+				//		{
+				//			for (auto& pb : pbullets) {
+				//				if (!pb.isActive) {
+				//					pb.pos = playerpos;
+				//					if (i == 0)
+				//					{
+				//						pangle += 0.2f;
+				//					}
+				//					else if (i == 1)
+				//					{
+				//						pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+				//					}
+				//					else
+				//					{
+				//						pangle -= 0.2f;
+				//					}
+				//					pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 7;//DX_PI
+
+				//					
+
+				//					pb.isActive = true;
+
+				//					
+
+
+				//					break;
+				//				}
+				//			}
+				//		}
+				//	}
+				//	break;
+				//case PTAMA_5:
+				//	tamaP = playerblle5;
+
+				//	for (int i = 0; i < GetRand(30); i++)
+				//	{
+
+				//		if (frame % 12 == 0)
+				//		{
+				//			for (auto& pb : pbullets) {
+				//				if (!pb.isActive) {
+				//					pb.pos = playerpos;
+				//					if (i == 0)
+				//					{
+				//						pangle += 0.2f;
+				//					}
+				//					else if (i == 1)
+				//					{
+				//						pangle = atan2(enemypos.y - playerpos.y, enemypos.x - playerpos.x);
+				//					}
+				//					else
+				//					{
+				//						pangle -= 0.2f;
+				//					}
+				//					pb.vel = Vector2(cos(pangle), sin(pangle)).Normalized() * 5;//DX_PI
+
+
+				//					pb.isActive = true;
+
+				//					
+
+				//					break;
+				//				}
+				//			}
+				//		}
+				//	}
+				//	break;
+				//}
+
+
+
+
+
+
+
+
+
+
+				//player
 		for (auto& pb : pbullets)
 		{
 			if (!pb.isActive) {
@@ -546,66 +900,81 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				pb.pos.y + 24 < 0 || pb.pos.y - 24 > 480) {
 				pb.isActive = false;
 			}
-			
+
 			//あたり！
 			//↓のIsHitは実装を書いてません。自分で書いてください。
 			//if (IsHit(pb.pos, pbulletRadius,enemypos, playerRadius)) {
 			//	//当たった反応を書いてください。
 			//	pb.isActive = false;
 			//}
-		}
 
 
 
-		
+
+
 		//敵
-		for (auto& b : bullets) 
-		{
-			if (!b.isActive) {
-				continue;
-			}
+			for (auto& b : bullets)
+			{
+				if (!b.isActive) {
+					continue;
+				}
 
-			
-			//弾の現在座標に弾の現在速度を加算してください
-			b.pos = b.pos + b.vel;
 
-			//弾の角度をatan2で計算してください。angleに値を入れるんだよオゥ
-			float angle2 = atan2(b.vel.y, b.vel.x);
-			
+				//弾の現在座標に弾の現在速度を加算してください
+				b.pos = b.pos + b.vel;
+
+				//弾の角度をatan2で計算してください。angleに値を入れるんだよオゥ
+				float angle2 = atan2(b.vel.y, b.vel.x);
+
 				DrawRotaGraph(b.pos.x, b.pos.y, 1.0f, angle2, tama, true);
-			
-
-			
-
-				
 
 
 
-			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
-			if (isDebugMode) {
-				//弾の本体(当たり判定)
-				DrawCircle(b.pos.x, b.pos.y, bulletRadius, 0x0000ff, false, 3);
-			}
-			//弾を殺す
-			if (b.pos.x + 16 < 0 || b.pos.x - 16 > 640 ||
-				b.pos.y + 24 < 0 || b.pos.y - 24 > 480) {
-				b.isActive = false;
-			}
-			if (mekakusiposx + 16 < 0 || mekakusiposx - 16 > 640 ||
-				mekakusiposy - 100 < 0 || mekakusiposy - 24 > 480) {
-				mekakusiposx = 0;
-				mekakusiposy = -100;
-			}
-			//あたり！
-			//↓のIsHitは実装を書いてません。自分で書いてください。
-			if (IsHit(b.pos, bulletRadius, playerpos, playerRadius)) {
-				//当たった反応を書いてください。
-				b.isActive = false;
+
+
+
+
+
+				//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
+				if (isDebugMode) {
+					//弾の本体(当たり判定)
+					DrawCircle(b.pos.x, b.pos.y, bulletRadius, 0x0000ff, false, 3);
+				}
+				//弾を殺す
+				if (b.pos.x + 16 < 0 || b.pos.x - 16 > 640 ||
+					b.pos.y + 24 < 0 || b.pos.y - 24 > 480) {
+					b.isActive = false;
+				}
+				if (mekakusiposx + 16 < 0 || mekakusiposx - 16 > 640 ||
+					mekakusiposy - 100 < 0 || mekakusiposy - 24 > 480) {
+					mekakusiposx = 0;
+					mekakusiposy = -100;
+				}
+				//あたり！
+				//↓のIsHitは実装を書いてません。自分で書いてください。
+				if (IsHit(b.pos, bulletRadius, playerpos, playerRadius)) {
+					//当たった反応を書いてください。
+					b.isActive = false;
+				}
+
+				if (IsHit(b.pos, bulletRadius, pb.pos, pbulletRadius)) {
+					//当たった反応を書いてください。
+					b.isActive = false;
+					pb.isActive = false;
+				}
+
+				/////////////////////////////////////////////////////////////////////////////
+				if (IsHit(enemypos, enemyRadius, playerpos, playerRadius)) {
+					//当たった反応を書いてください。
+					enemypos.y = 1000;
+					//playerMode = PLYER_INIT;
+					//plyertama = teki;
+				}
+
 			}
 		}
+			//敵の表示
 
-		//敵の表示
-		
 			enemypos.x = abs((int)((frame + 320) % 1280) - 640);
 			enemypos.y = enemypos.y + 3.0f;
 			/*if (enemypos.y >= 600)
@@ -623,7 +992,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			{
 				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH[eidx], true);
 			}
-			else if (tekihyouji=2)
+			else if (tekihyouji = 2)
 			{
 				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH2[eidx], true);
 			}
@@ -640,12 +1009,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				DrawRotaGraph(enemypos.x, enemypos.y, 2.0f, 0.0f, enemyH5[eidx], true);
 			}
 
-		if (isDebugMode) {
-			//敵の本体(当たり判定)
-			DrawCircle(enemypos.x, enemypos.y, 5, 0xffffff, false, 3);
-		}
-		++frame;
-		ScreenFlip();
+			if (isDebugMode) {
+				//敵の本体(当たり判定)
+				DrawCircle(enemypos.x, enemypos.y, 5, 0xffffff, false, 3);
+			}
+			++frame;
+			ScreenFlip();
+		
 	}
 
 	DxLib_End();
