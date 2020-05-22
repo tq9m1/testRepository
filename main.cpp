@@ -177,27 +177,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			tekiMode = TAMA_MAIN;
 			break;
 		case TAMA_MAIN:
-
-			/*	if (teki >= 0 || teki <= 19)
-				{
-					tekiMode = TAMA_1;
-				}
-				if (teki >= 20 || teki <= 39)
-				{
-					tekiMode = TAMA_2;
-				}
-				if (teki >= 40 || teki <= 59)
-				{
-					tekiMode = TAMA_3;
-				}
-				if (teki >= 60 || teki <= 79)
-				{
-					tekiMode = TAMA_4;
-				}
-				if (teki >= 80 || teki <= 100)
-				{
-					tekiMode = TAMA_5;
-				}*/
 			if (teki >= 0 && teki <= 19)
 			{
 				tekiMode = TAMA_1;
@@ -775,7 +754,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				//					
 				//					pb.isActive = true;
 
-				//					
+				//					aaa
 
 				//				}
 				//			}
@@ -870,37 +849,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				//player
 		for (auto& pb : pbullets)
 		{
+
 			if (!pb.isActive) {
 				continue;
 			}
-
-
-			//’e‚ÌŒ»İÀ•W‚É’e‚ÌŒ»İ‘¬“x‚ğ‰ÁZ‚µ‚Ä‚­‚¾‚³‚¢
+			//’e‚ÌŒ»İÀ•W‚É’e‚ÌŒ»İ‘¬“x‚ğ‰ÁZ‚µ‚Ä‚­‚¾‚³‚¢player
 			pb.pos = pb.pos + pb.vel;
-
 			//’e‚ÌŠp“x‚ğatan2‚ÅŒvZ‚µ‚Ä‚­‚¾‚³‚¢Bangle‚É’l‚ğ“ü‚ê‚é‚ñ‚¾‚æƒIƒD
-			float angle2 = atan2(pb.vel.y, pb.vel.x);
-
-			DrawRotaGraph(pb.pos.x, pb.pos.y, 1.0f, angle2, tamaP, true);
-
-
-
-
-
-
-
-
-			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
-			if (isDebugMode) {
-				//’e‚Ì–{‘Ì(“–‚½‚è”»’è)
-				DrawCircle(pb.pos.x, pb.pos.y, pbulletRadius, 0x0000ff, false, 3);
-			}
-			//’e‚ğE‚·
+			float pangle2 = atan2(pb.vel.y, pb.vel.x);
+			//player
+			DrawRotaGraph(pb.pos.x, pb.pos.y, 1.0f, pangle2, tamaP, true);
+			//’e‚ğE‚· player
 			if (pb.pos.x + 16 < 0 || pb.pos.x - 16 > 640 ||
 				pb.pos.y + 24 < 0 || pb.pos.y - 24 > 480) {
 				pb.isActive = false;
 			}
-
+			//player
+			if (isDebugMode) {
+				//’e‚Ì–{‘Ì(“–‚½‚è”»’è)
+				DrawCircle(pb.pos.x, pb.pos.y, pbulletRadius, 0x0000ff, false, 3);
+			}
+		}
+			//DrawGraph(mekakusiposx, mekakusiposy,mekakushi, true);
+			
 			//‚ ‚½‚èI
 			//«‚ÌIsHit‚ÍÀ‘•‚ğ‘‚¢‚Ä‚Ü‚¹‚ñB©•ª‚Å‘‚¢‚Ä‚­‚¾‚³‚¢B
 			//if (IsHit(pb.pos, pbulletRadius,enemypos, playerRadius)) {
@@ -909,7 +880,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//}
 
 
-
+		
 
 
 		//“G
@@ -919,15 +890,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					continue;
 				}
 
+			
 
 				//’e‚ÌŒ»İÀ•W‚É’e‚ÌŒ»İ‘¬“x‚ğ‰ÁZ‚µ‚Ä‚­‚¾‚³‚¢
 				b.pos = b.pos + b.vel;
+				
 
 				//’e‚ÌŠp“x‚ğatan2‚ÅŒvZ‚µ‚Ä‚­‚¾‚³‚¢Bangle‚É’l‚ğ“ü‚ê‚é‚ñ‚¾‚æƒIƒD
 				float angle2 = atan2(b.vel.y, b.vel.x);
+				//’e‚ÌŒ»İÀ•W‚É’e‚ÌŒ»İ‘¬“x‚ğ‰ÁZ‚µ‚Ä‚­‚¾‚³‚¢player
+			//	pb.pos = pb.pos + pb.vel;
+
+				
+
 
 				DrawRotaGraph(b.pos.x, b.pos.y, 1.0f, angle2, tama, true);
 
+				
 
 
 
@@ -940,16 +919,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					//’e‚Ì–{‘Ì(“–‚½‚è”»’è)
 					DrawCircle(b.pos.x, b.pos.y, bulletRadius, 0x0000ff, false, 3);
 				}
+				
+
+
 				//’e‚ğE‚·
 				if (b.pos.x + 16 < 0 || b.pos.x - 16 > 640 ||
 					b.pos.y + 24 < 0 || b.pos.y - 24 > 480) {
 					b.isActive = false;
 				}
-				if (mekakusiposx + 16 < 0 || mekakusiposx - 16 > 640 ||
+				for (auto& pb : pbullets)
+				{
+
+					if (!pb.isActive) {
+						continue;
+					}
+					if (IsHit(b.pos, bulletRadius,pb.pos, pbulletRadius)) {
+						//“–‚½‚Á‚½”½‰‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢B
+						b.isActive = false;
+						pb.isActive = false;
+					}
+
+				}
+
+				/*if (mekakusiposx + 16 < 0 || mekakusiposx - 16 > 640 ||
 					mekakusiposy - 100 < 0 || mekakusiposy - 24 > 480) {
 					mekakusiposx = 0;
 					mekakusiposy = -100;
-				}
+				}*/
 				//‚ ‚½‚èI
 				//«‚ÌIsHit‚ÍÀ‘•‚ğ‘‚¢‚Ä‚Ü‚¹‚ñB©•ª‚Å‘‚¢‚Ä‚­‚¾‚³‚¢B
 				if (IsHit(b.pos, bulletRadius, playerpos, playerRadius)) {
@@ -957,11 +953,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					b.isActive = false;
 				}
 
-				if (IsHit(b.pos, bulletRadius, pb.pos, pbulletRadius)) {
-					//“–‚½‚Á‚½”½‰‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢B
-					b.isActive = false;
-					pb.isActive = false;
-				}
+				//if (IsHit(b.pos, bulletRadius, pb.pos, pbulletRadius)) {
+				//	//“–‚½‚Á‚½”½‰‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢B
+				//	b.isActive = false;
+				//	pb.isActive = false;
+				//}
 
 				/////////////////////////////////////////////////////////////////////////////
 				if (IsHit(enemypos, enemyRadius, playerpos, playerRadius)) {
@@ -971,7 +967,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					//plyertama = teki;
 				}
 
-			}
+			
 		}
 			//“G‚Ì•\¦
 
