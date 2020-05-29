@@ -10,8 +10,12 @@ int hosi3;
 int skyy = 0;
 int skyy2 = 0;
 
-int p = 50;
+int px = 50;
+int py = px;
 int pos = 0;
+
+int cnt;
+bool moobflog=false;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	
@@ -19,19 +23,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//HaikeiInit();
 
 	HSysInit();
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+		while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		ClsDrawScreen();
 		//DrawPixel(320, 240, GetColor(255, 255, 255));	// 点を打つ
 	}
+		
 
-	if (CheckHitKey(KEY_INPUT_A))
-	{
-		pos += 10;
-	}
+	cnt++;
 
 	ScreenFlip();
 
+	
 	WaitKey();				// キー入力待ち
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
@@ -53,31 +56,52 @@ bool HSysInit(void)
 	haikei = LoadGraph("img/utyuu.png");
 	hosi1 = LoadGraph("img/hosi1.png");
 	hosi2 = LoadGraph("img/hosi2.png");
-	hosi3 = LoadGraph("img/hosi3.jpg");
+	hosi3 = LoadGraph("img/hosi3.png");
 
-	pos++;
 	HaikeiMain();
+
 	
+
 	SetDrawScreen(DX_SCREEN_BACK);
-	
-	//KeyCheckSysInit();
+
+		//KeyCheckSysInit();
 	SetTransColor(255, 0, 255);
+
+
 	
+
 	/*HaikeiMain();
 	HaikeiDraw();*/
 	return true;
 
 }
 
+
 void HaikeiMain(void)
 {
 	//DrawString(250, 240, "test", GetColor(0, 255, 100));
 	
-	
-	p =30;
-	
-	
-	
+	/*if (CheckHitKey(KEY_INPUT_A))
+	{
+		pos =pos+cnt;
+	}*/
+	//pos = pos + 10;
+	/*for (int i = 0; i >= 100; i++)
+	{
+		pos = GetRand(100);
+	}*/
+	if (moobflog = true)
+	{
+		pos = GetRand(100);
+	}
+	px =30;
+	py = px;
+	//PlaySoundFile("sund/short_song_kei_vegalost.mp3", DX_PLAYTYPE_LOOP);
+	//PlaySoundFile("sund/short_oke_song_kei_vegalost.mp3", DX_PLAYTYPE_LOOP);
+	PlaySoundFile("sund/oke_song_kei_vegalost.mp3", DX_PLAYTYPE_LOOP);
+
+
+
 	HaikeiDraw();
 }
 
@@ -89,10 +113,11 @@ void HaikeiDraw(void)
 	//skyy2 = (skyy2 + 2) % 480;
 	
 	
-	DrawExtendGraph(p+pos, p, p*2+pos, p*2 , hosi1, true);
-
+	DrawExtendGraph(px+pos, py, (px*2)+pos, py*2 , hosi1, true);
+	DrawGraph(pos, pos, hosi2, true);
 	DeleteGraph(hosi1);
 
+	moobflog = false;
 	/*skyy = (skyy + 1) % 480;
 	skyy2 = (skyy2 + 2) % 480;
 	DrawExtendGraph(0, skyy, 640, skyy + 480, hosi1, true);
