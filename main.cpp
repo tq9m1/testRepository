@@ -33,9 +33,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//îwåióp///////////////////////////////////////////////////
 	int haikei = LoadGraph("img/utyuu.png");
+	
 	int hosi1 = LoadGraph("img/hosi1.png");
 	int hosi2 = LoadGraph("img/hosi2.png");
 	int hosi3 = LoadGraph("img/hosi3.png");
+	int hosi4 = LoadGraph("img/hosi4.png");
 //////////////////////////////////////////////////////////////
 	//bgm
 	int bgm1 = LoadSoundMem("sund/oke_song_kei_vegalost.mp3");
@@ -113,6 +115,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	bool isDebugMode = false;
 	int skyy = 0;
 	int skyy2 = 0;
+	int skyy3 = 0;
 	int bgidx = 0;
 
 
@@ -127,10 +130,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//////////////////////////////////////////
 	//îwåiån
+
 	int px = 50;
 	int py = px;
 	int px1 = 0;
 	int py1 = px1;
+	int px2 = 100;
+	int py2 = px2;
+	int px3 = 400;
+	int py3 = px3;
 	//int pos = 0;
 	int hosisyokix;
 	int hosiposx;
@@ -138,7 +146,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int hosisyokix1;
 	int hosiposx1;
 	int hosiposy1;
-	float kousinnflg;
+	int hosiposx2;
+	int hosiposy2;
+	int hosiposx3;
+	int hosiposy3;
+	//float kousinnflg;
 ////////////////////////////////////////////////////////
 	while (ProcessMessage() == 0) {
 		ClearDrawScreen();
@@ -149,27 +161,46 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		
 		bgidx = (bgidx + 1) % 32;
+/////////////////////////////////////////////////////////////////////////////////
+		PlaySoundMem(bgm2, DX_PLAYTYPE_BACK);
+		PlaySoundMem(bgm1, DX_PLAYTYPE_BACK);
+
+		
 
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 255);
 
-		DrawGraph(0, 0, haikei, true);
+	
 		
-		skyy = (skyy + 1) % 500;
-		skyy2 = (skyy2 + 2) % 480;
+		skyy = (skyy + 5) % 640;
+		skyy2 = (skyy2 + 1) % 640;
+		skyy3 = (skyy3 + 5) % 640;
 		
 
 		/////////////////////////////////////////////////////////////////////////
 		//îwåi
+		DrawGraph(0, 0, haikei, true);
 		
-		
-		
+		px3 = 400;
+		py3 = px3;
+		hosiposy3 = -100;
+		hosiposx3 = 250;
+		DrawExtendGraph(hosiposx3 + px3, hosiposy3 + py3 + skyy3, hosiposx3 + (px3 * 2), hosiposy3 + (py3 * 2) + skyy3, hosi4, true);
+		px2 = 100;
+		py2=px2;
+		hosiposy2 = -200;
+		hosiposx2 = 300;
+
+
+		DrawExtendGraph(hosiposx2 + px2, hosiposy2 + py2 + skyy2, hosiposx2 + (px2 * 2), hosiposy2 + (py2 * 2) + skyy2, hosi3, true);
 		//pos=pos+GetRand(100);
 		{px = 30;
 		py = px;
 		hosiposy = -100;
-		//hosisyokix = 500;
-		kousinnflg = true;
 		hosiposx = 500;
+		
+
+
+		
 		
 		DrawExtendGraph(hosiposx + px, hosiposy + py + skyy, hosiposx + (px * 2), hosiposy + (py * 2) + skyy, hosi1, true);
 		}
@@ -187,9 +218,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 		}
 	//	DrawGraph(pos, pos, hosi2, true);
-/////////////////////////////////////////////////////////////////////////
-		PlaySoundMem(bgm2, DX_PLAYTYPE_BACK);
-		PlaySoundMem(bgm1, DX_PLAYTYPE_BACK);
 
 ////////////////////////////////////////////////////////////////////////////////
 		//ÉvÉåÉCÉÑÅ[
