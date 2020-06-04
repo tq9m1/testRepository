@@ -38,6 +38,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int hosi2 = LoadGraph("img/hosi2.png");
 	int hosi3 = LoadGraph("img/hosi3.png");
 	int hosi4 = LoadGraph("img/hosi4.png");
+	int hosi5 = LoadGraph("img/hosi5.png");
 //////////////////////////////////////////////////////////////
 	//bgm
 	int bgm1 = LoadSoundMem("sund/oke_song_kei_vegalost.mp3");
@@ -115,7 +116,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	bool isDebugMode = false;
 	int skyy = 0;
 	int skyy2 = 0;
-	int skyy3 = 0;
+	int skyy3 = 0.0f;
 	int bgidx = 0;
 
 
@@ -139,6 +140,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int py2 = px2;
 	int px3 = 400;
 	int py3 = px3;
+	int px4 = 50;
+	int py4 = px4;
 	//int pos = 0;
 	int hosisyokix;
 	int hosiposx;
@@ -150,6 +153,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int hosiposy2;
 	int hosiposx3;
 	int hosiposy3;
+	int hosiposx4;
+	int hosiposy4;
 	//float kousinnflg;
 ////////////////////////////////////////////////////////
 	while (ProcessMessage() == 0) {
@@ -172,8 +177,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 		
 		skyy = (skyy + 5) % 640;
-		skyy2 = (skyy2 + 1) % 640;
-		skyy3 = (skyy3 + 5) % 640;
+		skyy2 = (skyy2 + 2) % 640;
+		skyy3 = (skyy3 + 1) % 1040;
 		
 
 		/////////////////////////////////////////////////////////////////////////
@@ -182,9 +187,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		px3 = 400;
 		py3 = px3;
-		hosiposy3 = -100;
-		hosiposx3 = 250;
+		hosiposy3 = -900;
+		hosiposx3 = -300;
 		DrawExtendGraph(hosiposx3 + px3, hosiposy3 + py3 + skyy3, hosiposx3 + (px3 * 2), hosiposy3 + (py3 * 2) + skyy3, hosi4, true);
+
+
 		px2 = 100;
 		py2=px2;
 		hosiposy2 = -200;
@@ -193,7 +200,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		DrawExtendGraph(hosiposx2 + px2, hosiposy2 + py2 + skyy2, hosiposx2 + (px2 * 2), hosiposy2 + (py2 * 2) + skyy2, hosi3, true);
 		//pos=pos+GetRand(100);
-		{px = 30;
+		px = 30;
 		py = px;
 		hosiposy = -100;
 		hosiposx = 500;
@@ -203,8 +210,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		
 		DrawExtendGraph(hosiposx + px, hosiposy + py + skyy, hosiposx + (px * 2), hosiposy + (py * 2) + skyy, hosi1, true);
-		}
-		{
+		
+		px4 = 30;
+		py4 = px4;
+		hosiposy4 = -100;
+		hosiposx4 = 250;
+
+
+
+
+
+		DrawExtendGraph(hosiposx4 + px4, hosiposy4 + py4 + skyy, hosiposx4 + (px4 * 2), hosiposy4 + (py4 * 2) + skyy, hosi5, true);
+
 			
 			px1 = px1 + 1;
 			py1 = px1;
@@ -216,7 +233,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			{
 				px1 = 0;
 			}
-		}
+		
 	//	DrawGraph(pos, pos, hosi2, true);
 
 ////////////////////////////////////////////////////////////////////////////////
