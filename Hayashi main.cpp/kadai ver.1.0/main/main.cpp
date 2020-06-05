@@ -131,7 +131,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	gameMode = GMODE_INIT;
 
-	auto bulletH = LoadGraph("image/tama2.png");
+	auto bulletH = LoadGraph("image/tama5.png");
 	auto bulletH2 = LoadGraph("image/tama3.png");
 	auto bulletH3 = LoadGraph("image/tama4.png");
 	auto bulletH4 = LoadGraph("image/tama5.png");
@@ -428,18 +428,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					}
 				}
 			}			
-			break;
-			for (auto& b : bullets) {
-				if (!b.isActive) {
-					continue;
-				}
-				b.isActive = 0;
-				if (b.isActive == 0) {
-					for (int i = 0; i < SHOT_MAX; i++) {
-						shot[i].visible = 0;
-					}
-				}
-			}
+			break;						
+			
 		case TEST_GMODE_GAME:
 			if (fadeIn) {
 				if (!FadeInScreen(5)) fadeIn = false;
@@ -492,11 +482,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			b.pos = b.pos + b.vel;
 			float angle2 = atan2(b.vel.y, b.vel.x);
 			DrawRotaGraph(b.pos.x, b.pos.y, 1.0f, angle2, tama, true);
-			if (IsHit(b.pos, bulletRadius, player.pos, player.radius)) {//“G‚Ì’e “–‚½‚è”»’è
-				b.isActive = false;
-				player.damageFlag = 1;
-				if (player.damageFlag == 1) {
-					player.visible = 0;
+			//if (IsHit(b.pos, bulletRadius, player.pos, player.radius)) {//“G‚Ì’e‚Æplayer “–‚½‚è”»’è
+			//	b.isActive = false;
+			//	player.damageFlag = 1;
+			//	if (player.damageFlag == 1) {
+			//		player.visible = 0;
+			//	}
+			//}
+			for (int i = 0; i < SHOT_MAX; i++) {
+				if (IsHit(b.pos, bulletRadius, shot[i].pos, shot[i].radius)) {
+					b.isActive = 0;
+					shot[i].visible = 0;
 				}
 			}
 			if (isDebugMode) {
@@ -506,7 +502,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 			if (IsHit(enemypos, enemyRadius, player.pos, player.radius)) {
 				//“–‚½‚Á‚½”½‰ž‚ð‘‚¢‚Ä‚­‚¾‚³‚¢B
-				tekihyouji = 0;
+				tekihyouji = 1;
 				player.damageFlag = 1;
 				if (player.damageFlag == 1) {
 					player.visible = 0;
