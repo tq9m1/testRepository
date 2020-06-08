@@ -194,68 +194,100 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	int px = 50;
 	int py = px;
+	////////////////////
 	int px1 = 0;
 	int py1 = px1;
+	/////////////////////
 	int px2 = 100;
 	int py2 = px2;
+	////////////////////
 	int px3 = 400;
 	int py3 = px3;
-	int px4 = 50;
+	///////////////
+	int px4 = 150;
 	int py4 = px4;
+	//////////////////
 	int px5 = 50;
 	int py5 = px5;
+	/////////////////
 	int px6 = 50;
 	int py6 = px6;
+	////////////////////
 	int px7 = 50;
 	int py7 = px7;
+	/////////////////
 	int px8 = 50;
 	int py8 = px8;
+	/////////////////
 	int px9 = 50;
 	int py9 = px9;
+	/////////////////
 	int px10 = 50;
 	int py10 = px10;
+	///////////////////
 	int px11 = 50;
 	int py11 = px11;
+	/////////////////////
 	int px12 = 50;
 	int py12 = px12;
+	////////////////////
 	int px13 = 50;
 	int py13 = px13;
+	////////////////////
 	int px14 = 50;
 	int py14 = px14;
+	//////////////////////
 	int px15 = 50;
 	int py15 = px15;
+	//////////////////////
 	int px16 = 50;
 	int py16 = px16;
+	//////////////////
 	int px17 = 50;
 	int py17 = px17;
+	/////////////////////
 	int px18 = 50;
 	int py18 = px18;
+	///////////////////
 	int px19 = 50;
 	int py19 = px19;
+	////////////////
 	int px20 = 50;
 	int py20 = px20;
+	/////////////////
 	int px21 = 50;
 	int py21 = px21;
+	////////////////////
 	int px22 = 50;
 	int py22 = px22;
+	/////////////////////
 	int px23 = 50;
 	int py23 = px23;
+	//////////////////////
 	int px24 = 50;
 	int py24 = px24;
+	////////////////
 	int px25 = 50;
 	int py25 = px25;
+	////////////////////
 	int px26 = 50;
 	int py26 = px26;
+	///////////////
 	int px27 = 50;
 	int py27 = px27;
+	///////////////////
 	int px28 = 50;
 	int py28 = px28;
+	//////////////////
 	int px29 = 50;
 	int py29 = px29;
+	////////////////////
 	int px30 = 50;
 	int py30 = px30;
+	//////////////////////
 	int px31 = 50;
 	int py31 = px31;
+	////////////////////
 	int px32 = 50;
 	int py32 = px32;
 	
@@ -385,60 +417,88 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		hosiposx3=0;
 		hosiposy3=0;
+		/////////////////
 		hosiposx4=10;
 		hosiposy4=0;
+		///////////////
 		hosiposx5=20;
 		hosiposy5=-10;
+		//////////////////
 		hosiposx6=30;
 		hosiposy6=-20;
+		//////////////////
 		hosiposx7=30;
 		hosiposy7=0;
+		//////////////////
 		hosiposx8=40;
 		hosiposy8=0;
+		////////////////
 		hosiposx9=50;
 		hosiposy9=-10;
+		///////////////
 		hosiposx10=60;
 		hosiposy10=0;
+		////////////////
 		hosiposx11=70;
 		hosiposy11=0;
+		/////////////////
 		hosiposx12=80;
 		hosiposy12=0;
+		////////////////
 		hosiposx13=90;
 		hosiposy13=0;
+		//////////////////
 		hosiposx14=90;
 		hosiposy14=0;
+		//////////////////
 		hosiposx15=100;
 		hosiposy15=0;
+		/////////////////
 		hosiposx16=120;
 		hosiposy16=0;
+		//////////////////
 		hosiposx17=130;
 		hosiposy17=0;
+		///////////////////
 		hosiposx18=140;
 		hosiposy18=0;
+		//////////////////
 		hosiposx19=150;
 		hosiposy19=0;
+		/////////////////
 		hosiposx20=160;
 		hosiposy20=0;
+		/////////////////
 		hosiposx21=10;
 		hosiposy21=0;
+		////////////////////
 		hosiposx22=180;
 		hosiposy22=0;
+		///////////////////
 		hosiposx23=190;
 		hosiposy23=0;
+		///////////////////
 		hosiposx24=200;
 		hosiposy24=0;
+		//////////////////
 		hosiposx25=230;
 		hosiposy25=0;
+		///////////////////
 		hosiposx26=240;
 		hosiposy26=0;
+		///////////////////
 		hosiposx27=250;
 		hosiposy27=0;
+		//////////////////
 		hosiposx28=260;
 		hosiposy28=0;
+		////////////////////
 		hosiposx29=270;
 		hosiposy29=0;
+		///////////////////
 		hosiposx30=280;
 		hosiposy30=0;
+		/////////////////////
 		hosiposx31=290;
 		hosiposy31=0;
 		
