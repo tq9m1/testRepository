@@ -384,118 +384,145 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		skyy2 = (skyy2 + 2) % 640;
 		skyy3 = (skyy3 + 1) % 1040;
 		skyy4 = (skyy4 + 5) % 640;
-		skyy5 = (skyy5 + 5) % 640;
-		skyy6 = (skyy6 + 5) % 640;
-		skyy7 = (skyy7 + 5) % 640;
-		skyy8 = (skyy8 + 5) % 640;
-		skyy9 = (skyy9 + 5) % 640;
-		skyy10 = (skyy10 + 5) % 640;
-		skyy11 = (skyy11 + 5) % 640;
-		skyy12 = (skyy12 + 5) % 640;
-		skyy13 = (skyy13 + 5) % 640;
-		skyy14 = (skyy14 + 5) % 640;
-		skyy15 = (skyy15 + 5) % 640;
-		skyy16 = (skyy16 + 5) % 640;
-		skyy17 = (skyy17 + 5) % 640;
-		skyy18 = (skyy18 + 5) % 640;
-		skyy19 = (skyy19 + 5) % 640;
-		skyy20 = (skyy20 + 5) % 640;
-		skyy21 = (skyy21 + 5) % 640;
-		skyy22 = (skyy22 + 5) % 640;
-		skyy23 = (skyy23 + 5) % 640;
-		skyy24 = (skyy24 + 5) % 640;
-		skyy25 = (skyy25 + 5) % 640;
-		skyy26 = (skyy26 + 5) % 640;
-		skyy27 = (skyy27 + 5) % 640;
-		skyy28 = (skyy28 + 5) % 640;
-		skyy29 = (skyy29 + 5) % 640;
-		skyy30 = (skyy30 + 5) % 640;
-		skyy31 = (skyy31 + 5) % 640;
-		skyy32 = (skyy32 + 5) % 640;
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//skyy32 = (skyy32 + 5) % 640;
 
 
 
 		hosiposx3=0;
 		hosiposy3=0;
 		/////////////////
+		skyy5 = (skyy5 + 5) % 640;
 		hosiposx4=10;
 		hosiposy4=0;
 		///////////////
+		skyy6 = (skyy6 + 5) % 640;
 		hosiposx5=20;
 		hosiposy5=-10;
 		//////////////////
+		skyy7 = (skyy7 + 5) % 640;
 		hosiposx6=30;
 		hosiposy6=-20;
 		//////////////////
+		skyy8 = (skyy8 + 5) % 640;
 		hosiposx7=30;
 		hosiposy7=0;
 		//////////////////
+		skyy9 = (skyy9 + 5) % 640;
 		hosiposx8=40;
 		hosiposy8=0;
 		////////////////
+		skyy10 = (skyy10 + 5) % 640;
 		hosiposx9=50;
 		hosiposy9=-10;
 		///////////////
+		skyy11 = (skyy11 + 5) % 640;
 		hosiposx10=60;
 		hosiposy10=0;
 		////////////////
+		skyy12 = (skyy12 + 5) % 640;
 		hosiposx11=70;
 		hosiposy11=0;
 		/////////////////
+		skyy13 = (skyy13 + 5) % 640;
 		hosiposx12=80;
 		hosiposy12=0;
 		////////////////
+		skyy14 = (skyy14 + 5) % 640;
 		hosiposx13=90;
 		hosiposy13=0;
 		//////////////////
+		skyy15 = (skyy15 + 5) % 640;
 		hosiposx14=90;
 		hosiposy14=0;
 		//////////////////
+		skyy16 = (skyy16 + 5) % 640;
 		hosiposx15=100;
 		hosiposy15=0;
 		/////////////////
+		skyy17 = (skyy17 + 5) % 640;
 		hosiposx16=120;
 		hosiposy16=0;
 		//////////////////
+		skyy18 = (skyy18 + 5) % 640;
 		hosiposx17=130;
 		hosiposy17=0;
 		///////////////////
+		skyy19 = (skyy19 + 5) % 640;
 		hosiposx18=140;
 		hosiposy18=0;
 		//////////////////
+		skyy20 = (skyy20 + 5) % 640;
 		hosiposx19=150;
 		hosiposy19=0;
 		/////////////////
+		skyy21 = (skyy21 + 5) % 640;
 		hosiposx20=160;
 		hosiposy20=0;
 		/////////////////
+		skyy22 = (skyy22 + 5) % 640;
 		hosiposx21=10;
 		hosiposy21=0;
 		////////////////////
+		skyy23 = (skyy23 + 5) % 640;
 		hosiposx22=180;
 		hosiposy22=0;
 		///////////////////
+		skyy24 = (skyy24 + 5) % 640;
 		hosiposx23=190;
 		hosiposy23=0;
 		///////////////////
+		skyy25 = (skyy25 + 5) % 640;
 		hosiposx24=200;
 		hosiposy24=0;
 		//////////////////
+		skyy26 = (skyy26 + 5) % 640;
 		hosiposx25=230;
 		hosiposy25=0;
 		///////////////////
+		skyy27 = (skyy27 + 5) % 640;
 		hosiposx26=240;
 		hosiposy26=0;
 		///////////////////
+		skyy28 = (skyy28 + 5) % 640;
 		hosiposx27=250;
 		hosiposy27=0;
 		//////////////////
+		skyy29 = (skyy29 + 5) % 640;
 		hosiposx28=260;
 		hosiposy28=0;
 		////////////////////
+		skyy30 = (skyy30 + 5) % 640;
 		hosiposx29=270;
 		hosiposy29=0;
 		///////////////////
+		skyy31 = (skyy31 + 5) % 640;
 		hosiposx30=280;
 		hosiposy30=0;
 		/////////////////////
