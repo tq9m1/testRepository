@@ -415,15 +415,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		////////////////////////////
 		px3 = 400;
 		py3 = px3;
-		skyy4 = (skyy4 + 5) % (640 + px3);
-		hosiposx3=0;
-		hosiposy3=0;
+		skyy3 = (skyy3 + 1) % (640+px3);
+		hosiposy3 = -900;
+		hosiposx3 = -300;
 		/////////////////
-		px4 = 50;
+		px4 = 250;
 		py4 = px4;
-		skyy5 = (skyy5 + 5) % (640 + px4);
-		hosiposx4=10;
-		hosiposy4=0;
+		skyy5 = (skyy5 + 5) % (640 + px4+100);
+		hosiposx4=-200;
+		hosiposy4=py4*2;
 		///////////////
 		px5 = 50;
 		py5 = px5;
@@ -449,11 +449,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		hosiposx8=40;
 		hosiposy8=0;
 		////////////////
-		px9 = 50;
+		px9 = 350;
 		py9 = px9;
 		skyy10 = (skyy10 + 5) % (640 + px9);
-		hosiposx9=50;
-		hosiposy9=-10;
+		hosiposx9=-px;
+		hosiposy9=-10-py;
 		///////////////
 		px10 = 50;
 		py10 = px10;
@@ -586,10 +586,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//îwåi
 		DrawGraph(0, 0, haikei, true);
 		
-		px3 = 400;
-		py3 = px3;
-		hosiposy3 = -900;
-		hosiposx3 = -300;
+		
 		DrawExtendGraph(hosiposx3 + px3, hosiposy3 + py3 + skyy3, hosiposx3 + (px3 * 2), hosiposy3 + (py3 * 2) + skyy3, hosi4, true);
 
 
@@ -612,10 +609,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		DrawExtendGraph(hosiposx + px, hosiposy + py + skyy, hosiposx + (px * 2), hosiposy + (py * 2) + skyy, hosi1, true);
 		
-		px4 = 30;
-		py4 = px4;
-		hosiposy4 = -100;
-		hosiposx4 = 250;
+		
 
 
 
