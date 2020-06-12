@@ -421,57 +421,57 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/////////////////
 		px4 = 250;
 		py4 = px4;
-		skyy5 = (skyy5 + 5) % (640 + px4+100);
+		skyy5 = (skyy5 + 3) % (640 + px4*2+1000);
 		hosiposx4=-200;
-		hosiposy4=py4*2;
+		hosiposy4=-1900;
 		///////////////
 		px5 = 50;
 		py5 = px5;
-		skyy6 = (skyy6 + 5) % (640 + px5);
+		skyy6 = (skyy6 + 15) % (640 + px5+10000);
 		hosiposx5=20;
-		hosiposy5=-10;
+		hosiposy5=-10000;
 		//////////////////
 		px6 = 50;
 		py6 = px6;
-		skyy7 = (skyy7 + 5) % (640 + px6);
-		hosiposx6=30;
-		hosiposy6=-20;
+		skyy7 = (skyy7 + 10) % (640 + px6+500);
+		hosiposx6=130;
+		hosiposy6=-500;
 		//////////////////
-		px7 = 50;
+		px7 = 10;
 		py7 = px7;
-		skyy8 = (skyy8 + 5) % (640 + px7);
+		skyy8 = (skyy8 + 1) % (640 + px7+40);
 		hosiposx7=30;
-		hosiposy7=0;
+		hosiposy7=-40;
 		//////////////////
-		px8 = 50;
+		px8 = 10;
 		py8 = px8;
-		skyy9 = (skyy9 + 5) % (640 + px8);
+		skyy9 = (skyy9 + 1) % (640 + px8+60);
 		hosiposx8=40;
-		hosiposy8=0;
+		hosiposy8=-60;
 		////////////////
 		px9 = 350;
 		py9 = px9;
-		skyy10 = (skyy10 + 5) % (640 + px9);
-		hosiposx9=-px;
-		hosiposy9=-10-py;
+		skyy10 = (skyy10 + 3) % (640 + px9+900);
+		hosiposx9=(px*2)*-1;
+		hosiposy9=-900;
 		///////////////
-		px10 = 50;
+		px10 = 30;
 		py10 = px10;
-		skyy11 = (skyy11 + 5) % (640 + px10);
+		skyy11 = (skyy11 + 7) % (640 + px10+3000);
 		hosiposx10=60;
-		hosiposy10=0;
+		hosiposy10=-3000;
 		////////////////
-		px11 = 50;
+		px11 = 30;
 		py11 = px11;
-		skyy12 = (skyy12 + 5) % (640 + px11);
-		hosiposx11=70;
-		hosiposy11=0;
+		skyy12 = (skyy12 + 7) % (640 + px11+3060);
+		hosiposx11=120;
+		hosiposy11=-3060;
 		/////////////////
-		px12 = 50;
+		px12 = 30;
 		py12 = px12;
-		skyy13 = (skyy13 + 5) % (640 + px12);
-		hosiposx12=80;
-		hosiposy12=0;
+		skyy13 = (skyy13 + 7) % (640 + px12+3000);
+		hosiposx12=180;
+		hosiposy12=-3000;
 		////////////////
 		px13 = 50;
 		py13 = px13;
