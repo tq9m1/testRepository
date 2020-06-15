@@ -174,8 +174,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int skyy30 = 0;
 	int skyy31 = 0;
 	int skyy32 = 0;
-
-
+	int skyy33 = 0;
+	int skyy34 = 0;
+	int skyy35 = 0;
 
 	int bgidx = 0;
 
@@ -290,7 +291,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	////////////////////
 	int px32 = 0;
 	int py32 = 0;
-	
+	////////////////////
+	int px33 = 0;
+	int py33 = 0;
+	////////////////////
+	int px34 = 0;
+	int py34 = 0;
+
 	//int pos = 0;
 	int hosisyokix;
 	int hosiposx;
@@ -358,7 +365,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int hosiposy30;
 	int hosiposx31;
 	int hosiposy31;
-	
+	int hosiposx32;
+	int hosiposy32;
+	int hosiposx33;
+	int hosiposy33;
+	int hosiposx34;
+	int hosiposy34;
 	//float kousinnflg;
 ////////////////////////////////////////////////////////
 	while (ProcessMessage() == 0) {
@@ -415,15 +427,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		////////////////////////////
 		px3 = 400;
 		py3 = px3;
-		skyy3 = (skyy3 + 1) % (640+px3);
+		skyy3 = (skyy3 + 1) % (640+px3+40000);
 		hosiposy3 = -900;
-		hosiposx3 = -300;
+		hosiposx3 = -40300;
 		/////////////////
 		px4 = 250;
 		py4 = px4;
-		skyy5 = (skyy5 + 3) % (640 + px4*2+1000);
+		skyy5 = (skyy5 + 3) % (640 + px4*2+10000);
 		hosiposx4=-200;
-		hosiposy4=-1900;
+		hosiposy4=-10900;
 		///////////////
 		px5 = 50;
 		py5 = px5;
@@ -451,9 +463,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		////////////////
 		px9 = 350;
 		py9 = px9;
-		skyy10 = (skyy10 + 3) % (640 + px9+900);
+		skyy10 = (skyy10 + 2) % (640 + px9+3900);
 		hosiposx9=(px*2)*-1;
-		hosiposy9=-900;
+		hosiposy9=-3900;
 		///////////////
 		px10 = 30;
 		py10 = px10;
@@ -473,115 +485,137 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		hosiposx12=180;
 		hosiposy12=-3000;
 		////////////////
-		px13 = 50;
+		px13 = 15;
 		py13 = px13;
-		skyy14 = (skyy14 + 5) % (640 + px13);
+		skyy14 = (skyy14 + 1) % (640 + px13+20);
 		hosiposx13=90;
-		hosiposy13=0;
+		hosiposy13=-20;
 		//////////////////
 		px14 = 50;
 		py14 = px14;
-		skyy15 = (skyy15 + 5) % (640 + px14);
-		hosiposx14=90;
-		hosiposy14=0;
+		skyy15 = (skyy15 + 15) % (640 + px14+100000);
+		hosiposx14=390;
+		hosiposy14=-100000;
 		//////////////////
-		px15 = 50;
+		px15 = 20;
 		py15 = px15;
-		skyy16 = (skyy16 + 5) % (640 + px15);
+		skyy16 = (skyy16 + 3) % (640 + px15+1000);
 		hosiposx15=100;
-		hosiposy15=0;
+		hosiposy15=-1000;
 		/////////////////
 		px16 = 50;
 		py16 = px16;
-		skyy17 = (skyy17 + 5) % (640 + px16);
+		skyy17 = (skyy17 + 5) % (640 + px16+2000);
 		hosiposx16=120;
-		hosiposy16=0;
+		hosiposy16=-2000;
 		//////////////////
 		px17 = 50;
 		py17 = px17;
-		skyy18 = (skyy18 + 5) % (640 + px17);
-		hosiposx17=130;
-		hosiposy17=0;
+		skyy18 = (skyy18 + 5) % (640 + px17+500);
+		hosiposx17=200;
+		hosiposy17=-500;
 		///////////////////
-		px18 = 50;
+		px18 = 20;
 		py18 = px18;
-		skyy19 = (skyy19 + 5) % (640 + px18);
+		skyy19 = (skyy19 + 5) % (640 + px18+300);
 		hosiposx18=140;
-		hosiposy18=0;
+		hosiposy18=-300;
 		//////////////////
-		px19 = 50;
+		px19 = 70;
 		py19 = px19;
-		skyy20 = (skyy20 + 5) % (640 + px19);
+		skyy20 = (skyy20 + 8) % (640 + px19+6000);
 		hosiposx19=150;
-		hosiposy19=0;
+		hosiposy19=-6000;
 		/////////////////
-		px20 = 50;
+		px20 = 20;
 		py20 = px20;
-		skyy21 = (skyy21 + 5) % (640 + px20);
+		skyy21 = (skyy21 + 2) % (640 + px20+50);
 		hosiposx20=160;
-		hosiposy20=0;
+		hosiposy20=-50;
 		/////////////////
 		px21 = 50;
 		py21 = px21;
-		skyy22 = (skyy22 + 5) % (640 + px21);
-		hosiposx21=10;
-		hosiposy21=0;
+		skyy22 = (skyy22 +3) % (640 + px21+100);
+		hosiposx21=200;
+		hosiposy21=-100;
 		////////////////////
-		px22 = 50;
+		px22 = 150;
 		py22 = px22;
-		skyy23 = (skyy23 + 5) % (640 + px22);
+		skyy23 = (skyy23 + 5) % (640 + px22+30000);
 		hosiposx22=180;
-		hosiposy22=0;
+		hosiposy22=-3000;
 		///////////////////
 		px23 = 50;
 		py23 = px23;
-		skyy24 = (skyy24 + 5) % (640 + px23);
-		hosiposx23=190;
-		hosiposy23=0;
+		skyy24 = (skyy24 + 7) % (640 + px23+300);
+		hosiposx23=300;
+		hosiposy23=-300;
 		///////////////////
-		px24 = 50;
+		px24 = 250;
 		py24 = px24;
-		skyy25 = (skyy25 + 5) % (640 + px24);
+		skyy25 = (skyy25 + 2) % (640 + px24+5000);
 		hosiposx24=200;
-		hosiposy24=0;
+		hosiposy24=-5000;
 		//////////////////
 		px25 = 50;
 		py25 = px25;
-		skyy26 = (skyy26 + 5) % (640 + px25);
+		skyy26 = (skyy26 + 6) % (640 + px25+400);
 		hosiposx25=230;
-		hosiposy25=0;
+		hosiposy25=-400;
 		///////////////////
-		px26 = 50;
+		px26 = 20;
 		py26 = px26;
-		skyy27 = (skyy27 + 5) % (640 + px26);
-		hosiposx26=240;
-		hosiposy26=0;
+		skyy27 = (skyy27 + 3) % (640 + px26+1000);
+		hosiposx26=290;
+		hosiposy26=-1000;
 		///////////////////
-		px27 = 50;
+		px27 = 35;
 		py27 = px27;
-		skyy28 = (skyy28 + 5) % (640 + px27);
-		hosiposx27=250;
-		hosiposy27=0;
+		skyy28 = (skyy28 + 5) % (640 + px27+250);
+		hosiposx27=450;
+		hosiposy27=-250;
 		//////////////////
-		px28 = 50;
+		px28 = 30;
 		py28 = px28;
-		skyy29 = (skyy29 + 5) % (640 + px28);
+		skyy29 = (skyy29 + 2) % (640 + px28+300);
 		hosiposx28=260;
-		hosiposy28=0;
+		hosiposy28=-300;
 		////////////////////
-		px29 = 50;
+		px29 = 15;
 		py29 = px29;
-		skyy30 = (skyy30 + 5) % (640 + px29);
-		hosiposx29=270;
-		hosiposy29=0;
+		skyy30 = (skyy30 + 5) % (640 + px29+70);
+		hosiposx29=370;
+		hosiposy29=-70;
 		///////////////////
-		px30 = 50;
+		px30 = 15;
 		py30 = px30;
-		skyy31 = (skyy31 + 5) % (640 + px30);
+		skyy31 = (skyy31 + 1) % (640 + px30+50);
 		hosiposx30=500;
-		hosiposy30=0;
-		
-		
+		hosiposy30=-50;
+		////////////////////
+		px31 = 15;
+		py31 = px31;
+		skyy32 = (skyy32 + 1) % (640 + px31 + 50);
+		hosiposx31 = 450;
+		hosiposy31 = -50;
+		////////////////////////
+		px32 = 15;
+		py32 = px32;
+		skyy33 = (skyy33 + 1) % (640 + px32 + 150);
+		hosiposx32 = 600;
+		hosiposy32 = -150;
+		////////////////////////
+		px33 = 15;
+		py33 = px33;
+		skyy34 = (skyy34 + 1) % (640 + px33 + 200);
+		hosiposx33 = 480;
+		hosiposy33 = -200;
+		////////////////////////
+		px34 = 20;
+		py34 = px33;
+		skyy35 = (skyy35 + 3) % (640 + px34 + 1200);
+		hosiposx34 = 465;
+		hosiposy34 = -1200;
 		/////////////////////////////////////////////////////////////////////////
 		//îwåi
 		DrawGraph(0, 0, haikei, true);
@@ -656,8 +690,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DrawExtendGraph(hosiposx28 + px28, hosiposy28 + py28 + skyy29, hosiposx28 + (px28 * 2), hosiposy28 + (py28 * 2) + skyy29, hosi29, true);
 			DrawExtendGraph(hosiposx29 + px29, hosiposy29 + py29 + skyy30, hosiposx29 + (px29 * 2), hosiposy29 + (py29 * 2) + skyy30, hosi30, true);
 			DrawExtendGraph(hosiposx30 + px30, hosiposy30 + py30 + skyy31, hosiposx30 + (px30 * 2), hosiposy30 + (py30 * 2) + skyy31, hosi31, true);
-		//	DrawExtendGraph(hosiposx31 + px31, hosiposy31 + py31 + skyy32, hosiposx31 + (px31 * 2), hosiposy31 + (py31 * 2) + skyy32, hosi32, true);
-	
+			DrawExtendGraph(hosiposx31 + px31, hosiposy31 + py31 + skyy32, hosiposx31 + (px31 * 2), hosiposy31 + (py31 * 2) + skyy32, hosi10, true);
+			DrawExtendGraph(hosiposx32 + px32, hosiposy32 + py32 + skyy33, hosiposx32 + (px32 * 2), hosiposy32 + (py32 * 2) + skyy33, hosi21, true);
+			DrawExtendGraph(hosiposx33 + px33, hosiposy33 + py33 + skyy34, hosiposx33 + (px33 * 2), hosiposy33 + (py33 * 2) + skyy34, hosi19, true);
+			DrawExtendGraph(hosiposx34 + px34, hosiposy34 + py34 + skyy35, hosiposx34 + (px34 * 2), hosiposy34 + (py34 * 2) + skyy35, hosi3, true);
+
 	//	DrawGraph(pos, pos, hosi2, true);
 
 ////////////////////////////////////////////////////////////////////////////////
