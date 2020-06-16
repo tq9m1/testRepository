@@ -177,6 +177,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int skyy33 = 0;
 	int skyy34 = 0;
 	int skyy35 = 0;
+	int skyy36 = 0;
+	int skyy37 = 0;
+	int skyy38 = 0;
+	int skyy39 = 0;
+	int skyy40 = 0;
+
+
 
 	int bgidx = 0;
 
@@ -297,7 +304,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	////////////////////
 	int px34 = 0;
 	int py34 = 0;
-
+	////////////////////
+	int px35 = 0;
+	int py35 = 0;
+	////////////////////
+	int px36 = 0;
+	int py36 = 0;
+	////////////////////
+	int px37 = 0;
+	int py37 = 0;
+	////////////////////
+	int px38 = 0;
+	int py38 = 0;
+	////////////////////
+	int px39 = 0;
+	int py39 = 0;
 	//int pos = 0;
 	int hosisyokix;
 	int hosiposx;
@@ -371,6 +392,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	int hosiposy33;
 	int hosiposx34;
 	int hosiposy34;
+	int hosiposx35;
+	int hosiposy35;
+	int hosiposx36;
+	int hosiposy36;
+	int hosiposx37;
+	int hosiposy37;
+	int hosiposx38;
+	int hosiposy38;
+	int hosiposx39;
+	int hosiposy39;
 	//float kousinnflg;
 ////////////////////////////////////////////////////////
 	while (ProcessMessage() == 0) {
@@ -612,10 +643,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		hosiposy33 = -200;
 		////////////////////////
 		px34 = 20;
-		py34 = px33;
+		py34 = px34;
 		skyy35 = (skyy35 + 3) % (640 + px34 + 1200);
 		hosiposx34 = 465;
 		hosiposy34 = -1200;
+		////////////////////////
+		px35 = 20;
+		py35 = px35;
+		skyy36 = (skyy36 + 3) % (640 + px35 + 600);
+		hosiposx35 = 470;
+		hosiposy35= -600;
+		////////////////////////
+		px36 = 60;
+		py36 = px36;
+		skyy37 = (skyy37 + 6) % (640 + px36 + 800);
+		hosiposx36 = 550;
+		hosiposy36 = -800;
+		////////////////////////
+		px37 = 20;
+		py37 = px37;
+		skyy37 = (skyy38 + 2) % (640 + px37+ 100);
+		hosiposx37 = 150;
+		hosiposy37 = -100;
+		////////////////////////
+		px38 = 20;
+		py38 = px38;
+		skyy39 = (skyy39 + 1) % (640 + px37 + 100);
+		hosiposx38 = 250;
+		hosiposy38 = -100;
+		////////////////////////
+		px39 = 15;
+		py39 = px39;
+		skyy40 = (skyy40 + 1) % (640 + px38 + 200);
+		hosiposx39 = 50;
+		hosiposy39 = -200;
 		/////////////////////////////////////////////////////////////////////////
 		//îwåi
 		DrawGraph(0, 0, haikei, true);
@@ -681,7 +742,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DrawExtendGraph(hosiposx19 + px19, hosiposy19 + py19 + skyy20, hosiposx19 + (px19 * 2), hosiposy19 + (py19 * 2) + skyy20, hosi20, true);
 			DrawExtendGraph(hosiposx20 + px20, hosiposy20 + py20 + skyy21, hosiposx20 + (px20 * 2), hosiposy20 + (py20 * 2) + skyy21, hosi21, true);
 			DrawExtendGraph(hosiposx21 + px21, hosiposy21 + py21 + skyy22, hosiposx21 + (px21 * 2), hosiposy21 + (py21 * 2) + skyy22, hosi22, true);
-			DrawExtendGraph(hosiposx22 + px21, hosiposy22 + py22 + skyy23, hosiposx22 + (px22 * 2), hosiposy22 + (py22 * 2) + skyy23, hosi23, true);
+			DrawExtendGraph(hosiposx22 + px22, hosiposy22 + py22 + skyy23, hosiposx22 + (px22 * 2), hosiposy22 + (py22 * 2) + skyy23, hosi23, true);
 			DrawExtendGraph(hosiposx23 + px23, hosiposy23 + py23 + skyy24, hosiposx23 + (px23 * 2), hosiposy23 + (py23 * 2) + skyy24, hosi24, true);
 			DrawExtendGraph(hosiposx24 + px24, hosiposy24 + py24 + skyy25, hosiposx24 + (px24 * 2), hosiposy24 + (py24 * 2) + skyy25, hosi25, true);
 			DrawExtendGraph(hosiposx25 + px25, hosiposy25 + py25 + skyy26, hosiposx25 + (px25 * 2), hosiposy25 + (py25 * 2) + skyy26, hosi26, true);
@@ -694,6 +755,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DrawExtendGraph(hosiposx32 + px32, hosiposy32 + py32 + skyy33, hosiposx32 + (px32 * 2), hosiposy32 + (py32 * 2) + skyy33, hosi21, true);
 			DrawExtendGraph(hosiposx33 + px33, hosiposy33 + py33 + skyy34, hosiposx33 + (px33 * 2), hosiposy33 + (py33 * 2) + skyy34, hosi19, true);
 			DrawExtendGraph(hosiposx34 + px34, hosiposy34 + py34 + skyy35, hosiposx34 + (px34 * 2), hosiposy34 + (py34 * 2) + skyy35, hosi3, true);
+			DrawExtendGraph(hosiposx35 + px35, hosiposy35 + py35 + skyy36, hosiposx35 + (px35 * 2), hosiposy35 + (py35 * 2) + skyy36, hosi23, true);
+			DrawExtendGraph(hosiposx36 + px36, hosiposy36 + py36 + skyy37, hosiposx36 + (px36 * 2), hosiposy36 + (py36 * 2) + skyy37, hosi27, true);
+			DrawExtendGraph(hosiposx37 + px37, hosiposy37 + py37 + skyy38, hosiposx37 + (px37 * 2), hosiposy37 + (py37 * 2) + skyy38, hosi11, true);
+			DrawExtendGraph(hosiposx38 + px38, hosiposy38 + py38 + skyy39, hosiposx38 + (px38 * 2), hosiposy38 + (py38 * 2) + skyy39, hosi22, true);
+			DrawExtendGraph(hosiposx39 + px39, hosiposy39 + py39 + skyy40, hosiposx39 + (px39 * 2), hosiposy39 + (py39 * 2) + skyy40, hosi7, true);
 
 	//	DrawGraph(pos, pos, hosi2, true);
 
