@@ -202,7 +202,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//îwåiån
 
 	int px = 50;
-	int py = px;;
+	int py = px;
 	////////////////////////
 	int px1 = 0;
 	int py1 = px1;
