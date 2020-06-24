@@ -460,7 +460,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		bgidx = (bgidx + 1) % 32;
 /////////////////////////////////////////////////////////////////////////////////
-		PlaySoundMem(bgm2, DX_PLAYTYPE_BACK);
+		//PlaySoundMem(bgm2, DX_PLAYTYPE_BACK);
 		PlaySoundMem(bgm1, DX_PLAYTYPE_BACK);
 
 		
